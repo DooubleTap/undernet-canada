@@ -1,19 +1,19 @@
-# RPQC Website
+# #Canada @ Undernet Website
 
-Welcome to the RPQC website repository! This repo hosts the official RPQC website content.  
+Welcome to the official website repository for **#Canada @ Undernet**!  
 [Français](#français)
 
 ---
 
 ## Project Overview
 
-The RPQC website provides community info, stats, and rules in English and French.  
+This website provides information about the #Canada IRC channel, live stats, and community details.  
 
 **Key features:**  
 - Responsive design  
-- Dark-themed sections  
+- Dark-themed sections for readability  
 - Live stats section  
-- Multi-language support  
+- Multi-language support (English & French)  
 
 ---
 
@@ -21,11 +21,11 @@ The RPQC website provides community info, stats, and rules in English and French
 
 **Prerequisites:** Git and a modern browser. Optionally, Node.js or a local server.  
 
-**Clone the repo:**  
-`git clone https://github.com/YourUsername/rpqc-website.git`  
-`cd rpqc-website`  
+**Clone the repository:**  
+`git clone https://github.com/YourUsername/canada-irc-website.git`  
+`cd canada-irc-website`  
 
-**View locally:** open `index.html` in a browser, or run a local server:  
+**View locally:** open `index.html` in a browser or run a local server:  
 `python -m http.server 8000` → visit `http://localhost:8000`  
 
 ---
@@ -34,27 +34,27 @@ The RPQC website provides community info, stats, and rules in English and French
 
 - HTML pages in root, CSS in `/css`, JS in `/js`  
 - Images in `/images`, optimized for web  
-- Keep styles, colors, and fonts consistent  
+- Keep colors, fonts, and spacing consistent with the design  
 
 ---
 
 ## Commit Guidelines
 
 - Use **present tense** and **imperative mood**  
-- Short description: `Add gunmetal gray background to stats section`  
-- For bigger changes, add details on new features or fixes  
+- Short description example: `Add gunmetal gray background to stats section`  
+- For bigger changes, include details on new features or fixes  
 
 ---
 
 ## Contributing
 
-1. Fork the repo  
+1. Fork the repository  
 2. Create a branch: `git checkout -b feature/your-feature-name`  
 3. Make changes and commit  
-4. Push: `git push origin feature/your-feature-name`  
+4. Push your branch: `git push origin feature/your-feature-name`  
 5. Open a Pull Request with a clear description  
 
-All PRs are reviewed before merging.  
+All PRs will be reviewed before merging.  
 
 ---
 
@@ -66,17 +66,17 @@ MIT License – see [LICENSE](LICENSE)
 
 # Français
 
-[Back to English](#rpqc-website)
+[Back to English](#canada--undernet-website)
 
 ## Aperçu du projet
 
-Le site RPQC fournit des infos sur la communauté, des statistiques et des règles en français et anglais.  
+Ce site fournit des informations sur le canal **#Canada @ Undernet**, des statistiques et des détails sur la communauté.  
 
 **Fonctionnalités clés :**  
 - Design responsive  
-- Sections sombre pour lisibilité  
+- Sections sombres pour une meilleure lisibilité  
 - Section statistiques live  
-- Support multi-langues  
+- Support multi-langues (Anglais & Français)  
 
 ---
 
@@ -85,8 +85,8 @@ Le site RPQC fournit des infos sur la communauté, des statistiques et des règl
 **Pré-requis :** Git et un navigateur moderne. Optionnel : Node.js ou serveur local.  
 
 **Cloner le repo :**  
-`git clone https://github.com/YourUsername/rpqc-website.git`  
-`cd rpqc-website`  
+`git clone https://github.com/YourUsername/canada-irc-website.git`  
+`cd canada-irc-website`  
 
 **Voir localement :** ouvrir `index.html` ou lancer un serveur local :  
 `python -m http.server 8000` → visiter `http://localhost:8000`  
@@ -104,7 +104,7 @@ Le site RPQC fournit des infos sur la communauté, des statistiques et des règl
 ## Règles de commit
 
 - Temps présent et impératif  
-- Description courte : `Ajout du fond gris gunmetal à la section stats`  
+- Exemple de description courte : `Ajout du fond gris gunmetal à la section stats`  
 - Pour les gros changements, ajouter des détails sur les fonctionnalités ou correctifs  
 
 ---
