@@ -1,4 +1,4 @@
-/* Dark background + white text */
+/* Global Dark Theme */
 body {
   margin: 0;
   padding: 0;
@@ -8,16 +8,35 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  /* Subtle background map */
+  background-image: url('canada-map-dark.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  opacity: 0.95;
 }
 
 header, footer {
   text-align: center;
-  padding: 15px;
+  padding: 20px;
 }
 
 header h1 {
-  margin: 10px 0;
-  font-size: 2em;
+  margin: 0;
+  font-size: 2.2em;
+  color: #4da6ff;
+}
+
+header p {
+  margin: 5px 0 15px;
+  font-style: italic;
+  color: #cccccc;
+}
+
+nav {
+  margin-bottom: 20px;
 }
 
 nav a {
@@ -34,9 +53,17 @@ nav a:hover {
 
 .container {
   flex: 1;
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 900px;
+  margin: auto;
   padding: 20px;
+}
+
+.card {
+  background-color: rgba(30, 30, 30, 0.9);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
 }
 
 footer {
@@ -51,4 +78,14 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8em;
+  }
+  .container {
+    padding: 15px;
+  }
 }
