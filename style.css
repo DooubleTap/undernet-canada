@@ -1,11 +1,28 @@
+/* Reset some spacing defaults */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Flexbox layout for sticky footer */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
   font-family: Arial, sans-serif;
-  margin: 0; padding: 0;
   background: #121212;
   color: #e0e0e0;
   line-height: 1.6;
 }
 
+/* Main content area grows to push footer down */
+main {
+  flex: 1;
+}
+
+/* Header styling */
 header {
   background: #1e1e1e;
   color: #fff;
@@ -29,6 +46,7 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* Container styling */
 .container {
   max-width: 800px;
   margin: 2rem auto;
@@ -46,10 +64,10 @@ a {
   color: #66ccff;
 }
 
+/* Footer always at bottom */
 footer {
   text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
   background: #1e1e1e;
   border-top: 2px solid #333;
   font-size: 0.9rem;
