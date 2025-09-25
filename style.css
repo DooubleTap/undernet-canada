@@ -1,36 +1,94 @@
-/* Background */
+@@ -1,89 +1,36 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
-    background-image: url("background.png");
-    background-repeat: repeat;
-    background-size: cover;
+
+
+
     color: #e0e0e0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Rules page layout */
-.rules-page {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-    padding: 30px 20px;
-    justify-items: center;
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
 }
 
-.rules-page .container {
-    background: rgba(30,30,30,0.95);
+header h1 {
+    font-size: 2rem;
+    color: #4fc3f7;
+    margin-bottom: 10px;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #4fc3f7;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+
+}
+
+.container {
+    background: #1e1e1e;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    max-width: 600px;
+    margin-bottom: 30px;
+    max-width: 800px;
     width: 100%;
 }
 
-.rules-page h2 {
+.container h2 {
     color: #4fc3f7;
     margin-bottom: 15px;
+}
+
+.container ul {
+    margin: 10px 0 20px 20px;
+}
+
+.container li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: none;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+footer a {
+    color: #4fc3f7;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
