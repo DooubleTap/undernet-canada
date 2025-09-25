@@ -1,11 +1,10 @@
-/* Reset some spacing defaults */
+/* Reset and flex for sticky footer */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-/* Flexbox layout for sticky footer */
 body {
   display: flex;
   flex-direction: column;
@@ -17,18 +16,27 @@ body {
   line-height: 1.6;
 }
 
-/* Main content area grows to push footer down */
-main {
-  flex: 1;
+/* Centered layout */
+.container {
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  background: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
 }
 
-/* Header styling */
-header {
+/* Header & footer inside containers */
+header, footer {
+  margin: 0;
+}
+
+header .container, footer .container {
   background: #1e1e1e;
-  color: #fff;
-  padding: 1rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
   text-align: center;
-  border-bottom: 2px solid #333;
 }
 
 nav {
@@ -46,16 +54,6 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Container styling */
-.container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #1e1e1e;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.6);
-}
-
 h1, h2 {
   color: #66ccff;
 }
@@ -64,11 +62,34 @@ a {
   color: #66ccff;
 }
 
-/* Footer always at bottom */
+main {
+  flex: 1;
+}
+
+/* Footer */
 footer {
-  text-align: center;
-  padding: 1rem;
-  background: #1e1e1e;
-  border-top: 2px solid #333;
+  margin-top: auto;
   font-size: 0.9rem;
+}
+
+/* GitHub badges row */
+.github-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .container {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 5px;
+  }
 }
