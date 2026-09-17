@@ -3,11 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b0e13">
+<link rel="canonical" href="https://undernet.xyz/">
 <title>#Canada @ Undernet — Canadian IRC, English &amp; Français</title>
-<meta name="description" content="#Canada on the Undernet IRC network. Bilingual (English/Français), open 24/7, no account needed. Connect with any IRC client or use the webchat.">
+<meta name="description" content="#Canada on the Undernet IRC network. Bilingual (English/Français), open 24/7, no account needed. Connect with any IRC client or a web client in your browser.">
 <meta property="og:title" content="#Canada @ Undernet">
-<meta property="og:description" content="Undernet's bilingual Canadian channel. Connect with any IRC client or chat right in your browser.">
+<meta property="og:description" content="Undernet's bilingual Canadian channel. Connect with any IRC client or chat from your browser.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://undernet.xyz/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
 <style>
 :root{
@@ -19,9 +24,11 @@
   --border2:#2e3947;
   --text:#d7dee8;
   --muted:#8b98a9;
-  --faint:#5c6a7d;
-  --accent:#e8433f;
+  --faint:#7d8a9e;          /* ≥4.5:1 on every background below */
+  --accent:#e8433f;         /* text only on --bg / --bg2 */
   --accent-soft:#ff6b57;
+  --accent-fill:#c62f2b;    /* filled buttons: 5.5:1 with white text */
+  --accent-fill-hover:#a82925;
   --gold:#e5b567;
   --green:#4ec98a;
   --blue:#58a6ff;
@@ -44,6 +51,17 @@ h2{font-size:27px;letter-spacing:-.4px;line-height:1.2}
 h3{font-size:17px;letter-spacing:-.2px}
 .lede{color:var(--muted);max-width:66ch;margin-top:10px}
 
+/* ---------- accessibility helpers ---------- */
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{
+  position:absolute;left:12px;top:-60px;z-index:100;background:var(--gold);color:#0b0e13;
+  font-weight:700;padding:9px 14px;border-radius:8px;
+}
+.skip:focus{top:10px;text-decoration:none}
+main:focus{outline:none}
+[hidden]{display:none!important}
+
 /* ---------- top bar ---------- */
 header.top{
   position:sticky;top:0;z-index:60;
@@ -55,11 +73,15 @@ header.top{
 .brand:hover{text-decoration:none}
 .brand svg{width:20px;height:20px;flex-shrink:0}
 .brand .hash{color:var(--accent)}
-nav.links{display:flex;gap:4px;margin-left:auto}
+nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
 nav.links a{
-  color:var(--muted);font-size:14px;padding:6px 11px;border-radius:7px;
+  color:var(--muted);font-size:14px;padding:6px 11px;border-radius:7px;white-space:nowrap;
 }
 nav.links a:hover{color:var(--text);background:var(--panel);text-decoration:none}
+nav.links .sep{width:1px;height:18px;background:var(--border2);margin:0 6px}
+nav.links a.ext{color:var(--text)}
+nav.links a.x-reg{color:#fff;background:var(--accent-fill);font-weight:600;margin-left:4px}
+nav.links a.x-reg:hover{background:var(--accent-fill-hover)}
 .lang{
   display:flex;border:1px solid var(--border2);border-radius:8px;overflow:hidden;flex-shrink:0;
 }
@@ -67,7 +89,7 @@ nav.links a:hover{color:var(--text);background:var(--panel);text-decoration:none
   background:transparent;border:0;color:var(--faint);font:600 12px var(--sans);
   padding:5px 11px;cursor:pointer;letter-spacing:.5px;
 }
-.lang button.on{background:var(--accent);color:#fff}
+.lang button.on{background:var(--accent-fill);color:#fff}
 .lang button:not(.on):hover{color:var(--text);background:var(--panel)}
 .menu-btn{display:none;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;margin-left:auto}
 
@@ -95,8 +117,8 @@ nav.links a:hover{color:var(--text);background:var(--panel);text-decoration:none
   transition:border-color .15s,background .15s,transform .15s;
 }
 .btn:hover{border-color:var(--faint);background:var(--panel2);text-decoration:none;transform:translateY(-1px)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.primary:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
+.btn.primary{background:var(--accent-fill);border-color:var(--accent-fill);color:#fff}
+.btn.primary:hover{background:var(--accent-fill-hover);border-color:var(--accent-fill-hover)}
 .btn .arrow{opacity:.65}
 
 /* ---------- irc window mock ---------- */
@@ -114,8 +136,8 @@ nav.links a:hover{color:var(--text);background:var(--panel);text-decoration:none
 .ircwin .bar i:nth-child(3){background:var(--green)}
 .ircwin .bar span{margin-left:8px;color:var(--faint);font-size:11.5px;letter-spacing:.3px}
 .ircwin .body{padding:14px 15px;line-height:1.85;overflow-x:auto}
-.ircwin .ts{color:#3f4b5c}
-.ircwin .sys{color:#586e81}
+.ircwin .ts{color:var(--faint)}
+.ircwin .sys{color:#8a9bb0}
 .ircwin .n1{color:var(--cyan)}
 .ircwin .n2{color:var(--purple)}
 .ircwin .n3{color:var(--green)}
@@ -252,11 +274,6 @@ section>.wrap>header{margin-bottom:34px}
 .tag{font:600 10px var(--sans);letter-spacing:.7px;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--border2);color:var(--faint)}
 .tag.rec{color:var(--green);border-color:rgba(78,201,138,.4);background:rgba(78,201,138,.07)}
 
-/* webchat */
-.chatbox{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel)}
-.chatbox .placeholder{padding:52px 24px;text-align:center}
-.chatbox .placeholder p{color:var(--muted);font-size:14px;margin:10px auto 20px;max-width:52ch}
-.chatbox iframe{width:100%;height:560px;border:0;display:block;background:var(--code-bg)}
 
 /* bot */
 .bot-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:start}
@@ -275,7 +292,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,.014)}
   display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);
 }
 .rule:last-child{border-bottom:0}
-.rule .idx{font:700 13px var(--mono);color:var(--accent);flex-shrink:0;width:26px;padding-top:2px}
+.rule .idx{font:700 13px var(--mono);color:var(--accent-soft);flex-shrink:0;width:26px;padding-top:2px}
 .rule strong{display:block;margin-bottom:3px}
 .rule span{color:var(--muted);font-size:14px}
 
@@ -301,11 +318,25 @@ details .answer{padding:0 18px 17px;color:var(--muted);font-size:14.5px;max-widt
 /* footer */
 footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
 .foot-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:34px}
-.foot-col h4{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
+.foot-col h2{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
 .foot-col a{display:block;color:var(--muted);font-size:13.5px;padding:3px 0}
 .foot-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
 .leaf-mark{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
 .leaf-mark svg{width:15px;height:15px}
+.disclaimer{margin-top:14px;font-size:12.5px;color:var(--faint);max-width:80ch}
+
+/* cookie / storage notice */
+.notice-bar{
+  position:fixed;left:16px;right:16px;bottom:16px;z-index:80;max-width:620px;margin:0 auto;
+  background:var(--panel2);border:1px solid var(--border2);border-radius:12px;
+  box-shadow:0 18px 44px rgba(0,0,0,.55);padding:16px 18px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;
+}
+.notice-bar p{flex:1 1 260px;font-size:14px;color:var(--text)}
+.notice-bar .actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.notice-bar .btn{padding:8px 16px;font-size:13.5px}
+.linkbtn{background:none;border:0;color:var(--blue);font:inherit;cursor:pointer;padding:3px 0;text-align:left}
+.linkbtn:hover{text-decoration:underline}
 
 @media(max-width:940px){
   .hero .wrap{grid-template-columns:1fr;gap:38px}
@@ -314,15 +345,17 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
   .fact:nth-child(3){border-right:0}
   .g3{grid-template-columns:repeat(2,1fr)}
   .bot-wrap{grid-template-columns:1fr;gap:26px}
-}
-@media(max-width:680px){
   nav.links{display:none}
   nav.links.open{
-    display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;
+    display:flex;flex-direction:column;align-items:stretch;position:absolute;top:60px;left:0;right:0;
     background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px 16px;gap:2px;
   }
-  .menu-btn{display:block}
+  nav.links .sep{width:auto;height:1px;margin:6px 0}
+  nav.links a.x-reg{margin:6px 0 0;text-align:center}
+  .menu-btn{display:block;padding:4px 8px;border-radius:7px}
   .lang{margin-left:14px}
+}
+@media(max-width:680px){
   .facts .wrap{grid-template-columns:repeat(2,1fr)}
   .fact{border-right:0;border-bottom:1px solid var(--border)}
   .g3,.g2{grid-template-columns:1fr}
@@ -336,29 +369,35 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
 </style>
 </head>
 <body>
+<a class="skip" href="#main" data-en="Skip to content" data-fr="Aller au contenu">Skip to content</a>
+<span id="newtab-hint" hidden data-en="(opens in a new tab)" data-fr="(s'ouvre dans un nouvel onglet)">(opens in a new tab)</span>
 
 <!-- ===================== TOP BAR ===================== -->
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top">
+    <a class="brand" href="#top" aria-label="#Canada — top of page">
       <svg viewBox="0 0 100 100" fill="#e8433f" aria-hidden="true"><path d="M50 4l4 16 9-4-3 14 16-5-4 9 20-2-7 9 12 7-31 8 6 18-16-4-2 6 1 11h-8l1-11-2-6-16 4 6-18-31-8 12-7-7-9 20 2-4-9 16 5-3-14 9 4z"/></svg>
       <span><span class="hash">#</span>Canada</span>
     </a>
-    <button class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
-    <nav class="links" id="navlinks">
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="navlinks"><span aria-hidden="true">☰</span><span class="sr-only" data-en="Menu" data-fr="Menu">Menu</span></button>
+    <nav class="links" id="navlinks" aria-label="Main">
       <a href="#connect" data-en="Connect" data-fr="Se connecter">Connect</a>
-      <a href="#webchat" data-en="Webchat" data-fr="Webchat">Webchat</a>
       <a href="#clients" data-en="Clients" data-fr="Clients">Clients</a>
       <a href="#bot" data-en="Bot" data-fr="Robot">Bot</a>
       <a href="#rules" data-en="Rules" data-fr="Règles">Rules</a>
       <a href="#faq" data-en="FAQ" data-fr="FAQ">FAQ</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a class="ext" href="https://www.undernet.org/" target="_blank" rel="noopener noreferrer">Undernet ↗</a>
+      <a class="x-reg" href="https://cservice.undernet.org/live/" target="_blank" rel="noopener noreferrer" data-en="Register on X ↗" data-fr="S'inscrire sur X ↗">Register on X ↗</a>
     </nav>
-    <div class="lang" role="group" aria-label="Language">
-      <button id="btn-en" class="on" onclick="setLang('en')">EN</button>
-      <button id="btn-fr" onclick="setLang('fr')">FR</button>
+    <div class="lang" role="group" aria-label="Language / Langue">
+      <button id="btn-en" class="on" lang="en" aria-pressed="true" aria-label="English" onclick="setLang('en')">EN</button>
+      <button id="btn-fr" lang="fr" aria-pressed="false" aria-label="Français" onclick="setLang('fr')">FR</button>
     </div>
   </div>
 </header>
+
+<main id="main" tabindex="-1">
 
 <!-- ===================== HERO ===================== -->
 <div class="hero" id="top">
@@ -372,9 +411,9 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
         Undernet's Canadian channel. English and Français, coast to coast — no account, no app, no algorithm. Just a room full of people talking.
       </p>
       <div class="cta-row">
-        <a class="btn primary" href="#webchat">
+        <a class="btn primary" href="#web-clients">
           <span data-en="Chat in your browser" data-fr="Jaser dans le navigateur">Chat in your browser</span>
-          <span class="arrow">→</span>
+          <span class="arrow" aria-hidden="true">→</span>
         </a>
         <a class="btn" href="#connect">
           <span data-en="Use an IRC client" data-fr="Utiliser un client IRC">Use an IRC client</span>
@@ -382,7 +421,7 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       </div>
     </div>
 
-    <div class="ircwin" aria-hidden="true">
+    <div class="ircwin" role="img" aria-label="Example of a conversation in #Canada" data-en-label="Example of a conversation in #Canada" data-fr-label="Exemple de conversation dans #Canada">
       <div class="bar"><i></i><i></i><i></i><span>#Canada — irc.undernet.org</span></div>
       <div class="body">
         <div><span class="sys">*** Now talking in #Canada</span></div>
@@ -430,19 +469,19 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       <div class="bar"><i></i><i></i><i></i><span data-en="your IRC client" data-fr="ton client IRC">your IRC client</span></div>
 
       <div class="crow">
-        <div class="cnum">01</div>
+        <div class="cnum" aria-hidden="true">01</div>
         <div>
           <div class="cmdline"><span class="cmd">/server</span> <span class="arg">irc.undernet.org 6667</span></div>
           <span class="cnote"
-            data-en="Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? &lt;code&gt;ix1.undernet.org&lt;/code&gt; and &lt;code&gt;ix2.undernet.org&lt;/code&gt; are AnyCast — they route you to the closest one automatically. The full list is &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on undernet.org&lt;/a&gt;."
-            data-fr="Undernet compte une quarantaine de serveurs. Cette adresse t'en attribue un. Tu veux le plus proche? &lt;code&gt;ix1.undernet.org&lt;/code&gt; et &lt;code&gt;ix2.undernet.org&lt;/code&gt; sont en AnyCast — ils t'acheminent automatiquement vers le plus proche. La liste complète est &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;sur undernet.org&lt;/a&gt;.">
-            Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? <code>ix1.undernet.org</code> and <code>ix2.undernet.org</code> are AnyCast — they route you to the closest one automatically. The full list is <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener">on undernet.org</a>.</span>
+            data-en="Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? &lt;code&gt;ix1.undernet.org&lt;/code&gt; and &lt;code&gt;ix2.undernet.org&lt;/code&gt; are AnyCast — they route you to the closest one automatically. The full list is &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;on undernet.org&lt;/a&gt;."
+            data-fr="Undernet compte une quarantaine de serveurs. Cette adresse t'en attribue un. Tu veux le plus proche? &lt;code&gt;ix1.undernet.org&lt;/code&gt; et &lt;code&gt;ix2.undernet.org&lt;/code&gt; sont en AnyCast — ils t'acheminent automatiquement vers le plus proche. La liste complète est &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;sur undernet.org&lt;/a&gt;.">
+            Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? <code>ix1.undernet.org</code> and <code>ix2.undernet.org</code> are AnyCast — they route you to the closest one automatically. The full list is <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener noreferrer">on undernet.org</a>.</span>
         </div>
-        <button class="copybtn" data-copy="/server irc.undernet.org 6667">COPY</button>
+        <button class="copybtn" data-copy="/server irc.undernet.org 6667" aria-label="Copy: /server irc.undernet.org 6667" data-en="COPY" data-fr="COPIER">COPY</button>
       </div>
 
       <div class="crow">
-        <div class="cnum">02</div>
+        <div class="cnum" aria-hidden="true">02</div>
         <div>
           <div class="cmdline"><span class="cmd">/nick</span> <span class="arg">your_nick</span></div>
           <span class="cnote"
@@ -450,11 +489,11 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
             data-fr="Rien à créer. Undernet n'a pas de NickServ : prends n'importe quel pseudo que personne d'autre n'utilise.">
             Nothing to sign up for. Undernet has no NickServ, so take any nickname nobody else is using.</span>
         </div>
-        <button class="copybtn" data-copy="/nick your_nick">COPY</button>
+        <button class="copybtn" data-copy="/nick your_nick" aria-label="Copy: /nick your_nick" data-en="COPY" data-fr="COPIER">COPY</button>
       </div>
 
       <div class="crow">
-        <div class="cnum">03</div>
+        <div class="cnum" aria-hidden="true">03</div>
         <div>
           <div class="cmdline"><span class="cmd">/join</span> <span class="arg">#Canada</span></div>
           <span class="cnote"
@@ -462,54 +501,20 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
             data-fr="C'est tout — tu es entré. Dis bonjour, quelqu'un va répondre. Si ça a l'air tranquille, reste quand même : le monde traîne ici pendant des années.">
             That's it — you're in. Say hello; someone will answer. If the room looks quiet, stay anyway: people idle here for years.</span>
         </div>
-        <button class="copybtn" data-copy="/join #Canada">COPY</button>
+        <button class="copybtn" data-copy="/join #Canada" aria-label="Copy: /join #Canada" data-en="COPY" data-fr="COPIER">COPY</button>
       </div>
     </div>
 
     <p style="margin-top:18px;font-size:14px;color:var(--faint)"
-       data-en="No client yet? The webchat below needs none of this."
-       data-fr="Pas encore de client? Le webchat plus bas n'a besoin de rien de tout ça.">
-      No client yet? The webchat below needs none of this.</p>
+       data-en="No client yet? &lt;a href=&quot;#web-clients&quot;&gt;A web client&lt;/a&gt; runs in your browser and needs none of this."
+       data-fr="Pas encore de client? &lt;a href=&quot;#web-clients&quot;&gt;Un client web&lt;/a&gt; fonctionne dans ton navigateur et n'a besoin de rien de tout ça.">
+      No client yet? <a href="#web-clients">A web client</a> runs in your browser and needs none of this.</p>
 
     <div class="note warn">
       <b data-en="About encryption:" data-fr="À propos du chiffrement :">About encryption:</b>
-      <span data-en="Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use the browser webchat or a bouncer such as ZNC."
-            data-fr="Undernet n'offre pas de TLS — le port sécurisé habituel 6697 est fermé. Ta connexion au réseau n'est pas chiffrée : considère tout ce que tu écris comme public. Pour un lien chiffré, utilise le webchat ou un bouncer comme ZNC.">
-        Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use the browser webchat or a bouncer such as ZNC.</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WEBCHAT ===================== -->
-<section id="webchat">
-  <div class="wrap">
-    <header>
-      <div class="kicker" data-en="No install" data-fr="Sans installation">No install</div>
-      <h2 data-en="Chat right here" data-fr="Jase directement ici">Chat right here</h2>
-      <p class="lede"
-         data-en="A full IRC client in the page, connected straight to #Canada. Nothing loads until you ask it to."
-         data-fr="Un vrai client IRC dans la page, branché directement sur #Canada. Rien ne se charge avant que tu le demandes.">
-        A full IRC client in the page, connected straight to #Canada. Nothing loads until you ask it to.
-      </p>
-    </header>
-
-    <div class="chatbox" id="chatbox">
-      <div class="placeholder" id="chat-placeholder">
-        <h3 data-en="Launch the webchat" data-fr="Lancer le webchat">Launch the webchat</h3>
-        <p data-en="Opens KiwiIRC inside this page and connects you to #Canada on Undernet. Pick any nickname when it asks."
-           data-fr="Ouvre KiwiIRC dans cette page et te connecte à #Canada sur Undernet. Choisis le pseudo que tu veux quand on te le demande.">
-          Opens KiwiIRC inside this page and connects you to #Canada on Undernet. Pick any nickname when it asks.</p>
-        <button class="btn primary" id="launch-chat">
-          <span data-en="Connect to #Canada" data-fr="Se connecter à #Canada">Connect to #Canada</span>
-          <span class="arrow">→</span>
-        </button>
-        <p style="margin-top:18px;font-size:13px">
-          <a href="https://chat.undernet.org/" target="_blank" rel="noopener"
-             data-en="Prefer Undernet's own webchat? Open it in a new tab ↗"
-             data-fr="Tu préfères le webchat officiel d'Undernet? Ouvre-le dans un nouvel onglet ↗">
-            Prefer Undernet's own webchat? Open it in a new tab ↗</a>
-        </p>
-      </div>
+      <span data-en="Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use a web client over HTTPS or a bouncer such as ZNC."
+            data-fr="Undernet n'offre pas de TLS — le port sécurisé habituel 6697 est fermé. Ta connexion au réseau n'est pas chiffrée : considère tout ce que tu écris comme public. Pour un lien chiffré, utilise un client web en HTTPS ou un bouncer comme ZNC.">
+        Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use a web client over HTTPS or a bouncer such as ZNC.</span>
     </div>
   </div>
 </section>
@@ -528,14 +533,14 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
     </header>
 
     <div class="clist">
-      <div class="cgroup">Windows</div>
+      <h3 class="cgroup">Windows</h3>
 
       <div class="crow2">
         <div class="cname">mIRC <em data-en="Popular here" data-fr="Populaire ici">Popular here</em></div>
         <div class="cdesc" data-en="The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware."
              data-fr="Le classique. Trente ans de scripts derrière lui et encore le choix par défaut de bien des habitués d'Undernet. Partagiciel.">
           The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware.</div>
-        <a class="cget" href="https://www.mirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <a class="cget" href="https://www.mirc.com/" target="_blank" rel="noopener noreferrer" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
       <div class="crow2">
@@ -543,27 +548,27 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
         <div class="cdesc" data-en="Free, looks and scripts almost exactly like mIRC, and it is actively maintained. The easy upgrade if you already know mIRC."
              data-fr="Gratuit, ressemble à mIRC et utilise presque les mêmes scripts, mais activement maintenu. La mise à niveau évidente si tu connais déjà mIRC.">
           Free, looks and scripts almost exactly like mIRC, and it is actively maintained. The easy upgrade if you already know mIRC.</div>
-        <a class="cget" href="https://adiirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <a class="cget" href="https://adiirc.com/" target="_blank" rel="noopener noreferrer" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
-      <div class="cgroup" data-en="Windows · macOS · Linux" data-fr="Windows · macOS · Linux">Windows · macOS · Linux</div>
+      <h3 class="cgroup" data-en="Windows · macOS · Linux" data-fr="Windows · macOS · Linux">Windows · macOS · Linux</h3>
 
       <div class="crow2">
         <div class="cname">HexChat <em data-en="Start here" data-fr="Commence ici">Start here</em></div>
         <div class="cdesc" data-en="Open source, no-nonsense, works the same everywhere. The one to pick if you have never used IRC before."
              data-fr="Libre, sans chichi, identique partout. Celui à choisir si tu n'as jamais utilisé IRC.">
           Open source, no-nonsense, works the same everywhere. The one to pick if you have never used IRC before.</div>
-        <a class="cget" href="https://hexchat.github.io/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <a class="cget" href="https://hexchat.github.io/" target="_blank" rel="noopener noreferrer" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
-      <div class="cgroup" data-en="Terminal" data-fr="Terminal">Terminal</div>
+      <h3 class="cgroup" data-en="Terminal" data-fr="Terminal">Terminal</h3>
 
       <div class="crow2">
         <div class="cname">irssi</div>
         <div class="cdesc" data-en="Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect."
              data-fr="Tourne dans un terminal, tourne sans fin, tourne sur le serveur où tu te connectes en SSH. Avec tmux, tu ne te déconnectes jamais.">
           Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect.</div>
-        <a class="cget" href="https://irssi.org/" target="_blank" rel="noopener" data-en="Get irssi ↗" data-fr="Obtenir irssi ↗">Get irssi ↗</a>
+        <a class="cget" href="https://irssi.org/" target="_blank" rel="noopener noreferrer" data-en="Get irssi ↗" data-fr="Obtenir irssi ↗">Get irssi ↗</a>
       </div>
 
       <div class="crow2">
@@ -571,17 +576,33 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
         <div class="cdesc" data-en="The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone."
              data-fr="L'autre grand client en terminal : rapide, scriptable, avec une vraie interface à distance si tu veux ta session sur ton téléphone.">
           The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone.</div>
-        <a class="cget" href="https://weechat.org/" target="_blank" rel="noopener" data-en="Get WeeChat ↗" data-fr="Obtenir WeeChat ↗">Get WeeChat ↗</a>
+        <a class="cget" href="https://weechat.org/" target="_blank" rel="noopener noreferrer" data-en="Get WeeChat ↗" data-fr="Obtenir WeeChat ↗">Get WeeChat ↗</a>
       </div>
 
-      <div class="cgroup" data-en="Web &amp; mobile" data-fr="Web et mobile">Web &amp; mobile</div>
+      <h3 class="cgroup" id="web-clients" data-en="Web &amp; mobile — nothing to install" data-fr="Web et mobile — rien à installer">Web &amp; mobile — nothing to install</h3>
+
+      <div class="crow2">
+        <div class="cname">Undernet Webchat <em data-en="Official" data-fr="Officiel">Official</em></div>
+        <div class="cdesc" data-en="Undernet's own browser client. Open it, pick a nickname, and type &lt;code&gt;/join #Canada&lt;/code&gt; once you're connected."
+             data-fr="Le client web officiel d'Undernet. Ouvre-le, choisis un pseudo, puis tape &lt;code&gt;/join #Canada&lt;/code&gt; une fois connecté.">
+          Undernet's own browser client. Open it, pick a nickname, and type <code>/join #Canada</code> once you're connected.</div>
+        <a class="cget" href="https://chat.undernet.org/" target="_blank" rel="noopener noreferrer" data-en="Open webchat ↗" data-fr="Ouvrir le webchat ↗">Open webchat ↗</a>
+      </div>
+
+      <div class="crow2">
+        <div class="cname">KiwiIRC</div>
+        <div class="cdesc" data-en="A modern browser client. This link is already pointed at Undernet and #Canada — choose a nickname and press Start."
+             data-fr="Un client web moderne. Ce lien est déjà pointé sur Undernet et #Canada — choisis un pseudo et appuie sur Start.">
+          A modern browser client. This link is already pointed at Undernet and #Canada — choose a nickname and press Start.</div>
+        <a class="cget" href="https://kiwiirc.com/nextclient/irc.undernet.org/#Canada" target="_blank" rel="noopener noreferrer" data-en="Open KiwiIRC ↗" data-fr="Ouvrir KiwiIRC ↗">Open KiwiIRC ↗</a>
+      </div>
 
       <div class="crow2">
         <div class="cname">IRCCloud <em data-en="Stays online" data-fr="Reste en ligne">Stays online</em></div>
         <div class="cdesc" data-en="Hosted IRC that stays connected while you are away and syncs to your phone. The free tier disconnects after a couple of hours idle."
              data-fr="IRC hébergé qui reste connecté en ton absence et se synchronise avec ton téléphone. La version gratuite se déconnecte après quelques heures d'inactivité.">
           Hosted IRC that stays connected while you are away and syncs to your phone. The free tier disconnects after a couple of hours idle.</div>
-        <a class="cget" href="https://www.irccloud.com/" target="_blank" rel="noopener" data-en="Open IRCCloud ↗" data-fr="Ouvrir IRCCloud ↗">Open IRCCloud ↗</a>
+        <a class="cget" href="https://www.irccloud.com/" target="_blank" rel="noopener noreferrer" data-en="Open IRCCloud ↗" data-fr="Ouvrir IRCCloud ↗">Open IRCCloud ↗</a>
       </div>
     </div>
 
@@ -604,10 +625,12 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
     <div class="bot-wrap">
       <div>
         <table>
-          <tr>
-            <th style="width:38%" data-en="Command" data-fr="Commande">Command</th>
-            <th data-en="What it does" data-fr="Ce que ça fait">What it does</th>
-          </tr>
+          <caption class="sr-only" data-en="Common OhCanada commands" data-fr="Commandes courantes d'OhCanada">Common OhCanada commands</caption>
+          <thead><tr>
+            <th scope="col" style="width:38%" data-en="Command" data-fr="Commande">Command</th>
+            <th scope="col" data-en="What it does" data-fr="Ce que ça fait">What it does</th>
+          </tr></thead>
+          <tbody>
           <tr><td><code>!help</code></td><td data-en="Everything it can do — answered by notice, never in the channel" data-fr="Tout ce qu'il sait faire — répondu par notice, jamais dans le canal">Everything it can do — answered by notice, never in the channel</td></tr>
           <tr><td><code>!help &lt;command&gt;</code></td><td data-en="Usage, description and an example for one command" data-fr="Utilisation, description et exemple pour une commande">Usage, description and an example for one command</td></tr>
           <tr><td><code>/msg OhCanada register</code></td><td data-en="Register yourself with the bot — it sends you a code to type back" data-fr="T'enregistrer auprès du robot — il t'envoie un code à retaper">Register yourself with the bot — it sends you a code to type back</td></tr>
@@ -615,6 +638,7 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
           <tr><td><code>!info &lt;text&gt;</code></td><td data-en="Set the infoline people see in your whois" data-fr="Définit la ligne d'info visible dans ton whois">Set the infoline people see in your whois</td></tr>
           <tr><td><code>!ops &lt;reason&gt;</code></td><td data-en="Quietly page the channel staff when something is wrong" data-fr="Alerte discrètement l'équipe du canal quand ça va mal">Quietly page the channel staff when something is wrong</td></tr>
           <tr><td><code>!bans</code></td><td data-en="What's on the banlist right now" data-fr="Ce qui est sur la liste de bannissement en ce moment">What's on the banlist right now</td></tr>
+          </tbody>
         </table>
         <p style="margin-top:14px;font-size:13.5px;color:var(--faint)"
            data-en="Every reply arrives as a private notice, so nobody has to watch the channel fill up with bot output."
@@ -636,13 +660,13 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
           Every command, every access level, the module system, the auto-voice rules and the protections — written out properly with examples.</p>
         <a class="btn primary" href="docs.html" style="margin-top:16px">
           <span data-en="Open the documentation" data-fr="Ouvrir la documentation">Open the documentation</span>
-          <span class="arrow">→</span>
+          <span class="arrow" aria-hidden="true">→</span>
         </a>
         <p style="margin-top:16px;font-size:13px;color:var(--faint)"
            data-en="OhCanada runs lmao.tcl on eggdrop. The script is open source."
            data-fr="OhCanada tourne sous lmao.tcl sur eggdrop. Le script est libre.">
           OhCanada runs lmao.tcl on eggdrop. The script is open source.</p>
-        <a style="font-size:13px" href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener">github.com/DooubleTap/lmao.tcl ↗</a>
+        <a style="font-size:13px" href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener noreferrer">github.com/DooubleTap/lmao.tcl ↗</a>
       </div>
     </div>
   </div>
@@ -727,9 +751,9 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
 
     <details>
       <summary data-en="Is the connection encrypted?" data-fr="La connexion est-elle chiffrée?">Is the connection encrypted?</summary>
-      <div class="answer" data-en="Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. The browser webchat encrypts the hop between you and the webchat provider, and a bouncer like ZNC does the same. Either way, treat the channel as a public room."
-           data-fr="Pas jusqu'à Undernet — le réseau n'offre pas de TLS, donc le port 6697 ne répond pas. Le webchat chiffre le lien entre toi et le fournisseur, et un bouncer comme ZNC fait pareil. Dans tous les cas, considère le canal comme une salle publique.">
-        Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. The browser webchat encrypts the hop between you and the webchat provider, and a bouncer like ZNC does the same. Either way, treat the channel as a public room.</div>
+      <div class="answer" data-en="Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. A web client such as the Undernet webchat or KiwiIRC encrypts the hop between your browser and its server, and a bouncer like ZNC does the same. Either way, treat the channel as a public room."
+           data-fr="Pas jusqu'à Undernet — le réseau n'offre pas de TLS, donc le port 6697 ne répond pas. Un client web comme le webchat Undernet ou KiwiIRC chiffre le lien entre ton navigateur et son serveur, et un bouncer comme ZNC fait pareil. Dans tous les cas, considère le canal comme une salle publique.">
+        Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. A web client such as the Undernet webchat or KiwiIRC encrypts the hop between your browser and its server, and a bouncer like ZNC does the same. Either way, treat the channel as a public room.</div>
     </details>
 
     <details>
@@ -755,32 +779,38 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
   </div>
 </section>
 
+</main>
+
 <!-- ===================== FOOTER ===================== -->
 <footer class="site">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-col">
-        <h4 data-en="Channel" data-fr="Canal">Channel</h4>
+        <h2 data-en="Channel" data-fr="Canal">Channel</h2>
         <a href="#connect" data-en="How to connect" data-fr="Comment se connecter">How to connect</a>
         <a href="#rules" data-en="Channel rules" data-fr="Règles du canal">Channel rules</a>
         <a href="docs.html" data-en="OhCanada bot guide" data-fr="Guide du robot OhCanada">OhCanada bot guide</a>
       </div>
       <div class="foot-col">
-        <h4>Undernet</h4>
-        <a href="https://www.undernet.org/" target="_blank" rel="noopener" data-en="Network home ↗" data-fr="Accueil du réseau ↗">Network home ↗</a>
-        <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener" data-en="Server list ↗" data-fr="Liste des serveurs ↗">Server list ↗</a>
-        <a href="https://cservice.undernet.org/live" target="_blank" rel="noopener">CService ↗</a>
-        <a href="https://www.undernet.org/help.php" target="_blank" rel="noopener" data-en="Help &amp; support ↗" data-fr="Aide et soutien ↗">Help &amp; support ↗</a>
+        <h2>Undernet</h2>
+        <a href="https://www.undernet.org/" target="_blank" rel="noopener noreferrer" data-en="Network home ↗" data-fr="Accueil du réseau ↗">Network home ↗</a>
+        <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener noreferrer" data-en="Server list ↗" data-fr="Liste des serveurs ↗">Server list ↗</a>
+        <a href="https://cservice.undernet.org/live/" target="_blank" rel="noopener noreferrer" data-en="Register on X (CService) ↗" data-fr="S'inscrire sur X (CService) ↗">Register on X (CService) ↗</a>
+        <a href="https://www.undernet.org/help.php" target="_blank" rel="noopener noreferrer" data-en="Help &amp; support ↗" data-fr="Aide et soutien ↗">Help &amp; support ↗</a>
+        <a href="https://www.undernet.org/aup.php" target="_blank" rel="noopener noreferrer" data-en="Acceptable use policy ↗" data-fr="Politique d'utilisation acceptable ↗">Acceptable use policy ↗</a>
       </div>
       <div class="foot-col">
-        <h4 data-en="Source" data-fr="Code source">Source</h4>
-        <a href="https://github.com/DooubleTap/undernet-canada" target="_blank" rel="noopener" data-en="This site on GitHub ↗" data-fr="Ce site sur GitHub ↗">This site on GitHub ↗</a>
-        <a href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener" data-en="The bot script ↗" data-fr="Le script du robot ↗">The bot script ↗</a>
-      </div>
-      <div class="foot-col">
-        <h4 data-en="Connect" data-fr="Connexion">Connect</h4>
+        <h2 data-en="Connect" data-fr="Connexion">Connect</h2>
         <a href="irc://irc.undernet.org:6667/Canada">irc://irc.undernet.org/Canada</a>
-        <a href="https://chat.undernet.org/" target="_blank" rel="noopener" data-en="Undernet webchat ↗" data-fr="Webchat Undernet ↗">Undernet webchat ↗</a>
+        <a href="https://chat.undernet.org/" target="_blank" rel="noopener noreferrer" data-en="Undernet webchat ↗" data-fr="Webchat Undernet ↗">Undernet webchat ↗</a>
+        <a href="https://github.com/DooubleTap/undernet-canada" target="_blank" rel="noopener noreferrer" data-en="This site on GitHub ↗" data-fr="Ce site sur GitHub ↗">This site on GitHub ↗</a>
+        <a href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener noreferrer" data-en="The bot script ↗" data-fr="Le script du robot ↗">The bot script ↗</a>
+      </div>
+      <div class="foot-col">
+        <h2 data-en="Legal" data-fr="Mentions légales">Legal</h2>
+        <a href="privacy.html" data-en="Privacy policy" data-fr="Politique de confidentialité">Privacy policy</a>
+        <a href="terms.html" data-en="Terms of use" data-fr="Conditions d'utilisation">Terms of use</a>
+        <a href="cookies.html" data-en="Cookie policy" data-fr="Politique relative aux témoins">Cookie policy</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -790,8 +820,26 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       </span>
       <span><code>irc.undernet.org</code> · <code>#Canada</code></span>
     </div>
+    <p class="disclaimer"
+       data-en="A community site run by the #Canada channel team. Not operated by or officially affiliated with the Undernet IRC network. No cookies, no analytics, no ads."
+       data-fr="Un site communautaire géré par l'équipe du canal #Canada. Il n'est ni exploité par le réseau IRC Undernet ni officiellement affilié à celui-ci. Aucun témoin, aucune analyse d'audience, aucune publicité.">
+      A community site run by the #Canada channel team. Not operated by or officially affiliated with the Undernet IRC network. No cookies, no analytics, no ads.</p>
   </div>
 </footer>
+
+<!-- ===================== STORAGE NOTICE ===================== -->
+<div class="notice-bar" id="notice" role="region" aria-labelledby="notice-text" hidden>
+  <p id="notice-text"
+     data-en="&lt;b&gt;No cookies, no tracking.&lt;/b&gt; This site only remembers your language choice, and only in your own browser."
+     data-fr="&lt;b&gt;Aucun témoin, aucun pistage.&lt;/b&gt; Ce site retient seulement ton choix de langue, et seulement dans ton propre navigateur.">
+    <b>No cookies, no tracking.</b> This site only remembers your language choice, and only in your own browser.</p>
+  <div class="actions">
+    <a href="cookies.html" data-en="Cookie policy" data-fr="Politique relative aux témoins">Cookie policy</a>
+    <button class="btn primary" id="notice-ok" data-en="Got it" data-fr="Compris">Got it</button>
+  </div>
+</div>
+
+<p class="sr-only" id="live" aria-live="polite"></p>
 
 <script>
 /* ---------- language ---------- */
@@ -801,8 +849,14 @@ function setLang(lang){
     var v = el.getAttribute('data-' + lang);
     if(v !== null) el.innerHTML = v;
   });
-  document.getElementById('btn-en').classList.toggle('on', lang === 'en');
-  document.getElementById('btn-fr').classList.toggle('on', lang === 'fr');
+  document.querySelectorAll('[data-en-label]').forEach(function(el){
+    el.setAttribute('aria-label', el.getAttribute('data-' + lang + '-label'));
+  });
+  ['en','fr'].forEach(function(l){
+    var b = document.getElementById('btn-' + l);
+    b.classList.toggle('on', l === lang);
+    b.setAttribute('aria-pressed', l === lang ? 'true' : 'false');
+  });
   try{ localStorage.setItem('lang', lang); }catch(e){}
 }
 (function(){
@@ -812,37 +866,51 @@ function setLang(lang){
   if(saved === 'fr') setLang('fr');
 })();
 
+/* ---------- new-tab links: announce to screen readers ---------- */
+document.querySelectorAll('a[target="_blank"]').forEach(function(a){
+  a.setAttribute('aria-describedby', 'newtab-hint');
+});
+
 /* ---------- copy buttons ---------- */
 document.addEventListener('click', function(e){
   var b = e.target.closest('.copybtn');
-  if(!b) return;
-  var txt = b.getAttribute('data-copy');
-  var done = function(){
-    var old = b.textContent;
+  if(!b || !navigator.clipboard) return;
+  navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function(){
+    var fr = document.documentElement.lang === 'fr';
     b.classList.add('ok'); b.textContent = '✓';
-    setTimeout(function(){ b.classList.remove('ok'); b.textContent = old; }, 1300);
-  };
-  if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done).catch(function(){}); }
-});
-
-/* ---------- webchat (loads only on click) ---------- */
-document.getElementById('launch-chat').addEventListener('click', function(){
-  var box = document.getElementById('chatbox');
-  var frame = document.createElement('iframe');
-  frame.src = 'https://kiwiirc.com/nextclient/irc.undernet.org/#Canada';
-  frame.title = 'KiwiIRC webchat for #Canada';
-  frame.allow = 'clipboard-write';
-  box.innerHTML = '';
-  box.appendChild(frame);
+    document.getElementById('live').textContent = (fr ? 'Copié : ' : 'Copied: ') + b.getAttribute('data-copy');
+    clearTimeout(b._t);
+    b._t = setTimeout(function(){
+      b.classList.remove('ok');
+      b.textContent = document.documentElement.lang === 'fr' ? 'COPIER' : 'COPY';
+    }, 1300);
+  }).catch(function(){});
 });
 
 /* ---------- mobile menu ---------- */
-document.getElementById('menu-btn').addEventListener('click', function(){
-  document.getElementById('navlinks').classList.toggle('open');
+var menuBtn = document.getElementById('menu-btn'), nav = document.getElementById('navlinks');
+function setMenu(open){
+  nav.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+menuBtn.addEventListener('click', function(){ setMenu(!nav.classList.contains('open')); });
+nav.addEventListener('click', function(e){ if(e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && nav.classList.contains('open')){ setMenu(false); menuBtn.focus(); }
 });
-document.getElementById('navlinks').addEventListener('click', function(){
-  this.classList.remove('open');
-});
+
+/* ---------- storage notice (shown once) ---------- */
+(function(){
+  var seen = false;
+  try{ seen = localStorage.getItem('notice-ok') === '1'; }catch(e){}
+  if(seen) return;
+  var bar = document.getElementById('notice');
+  bar.hidden = false;
+  document.getElementById('notice-ok').addEventListener('click', function(){
+    try{ localStorage.setItem('notice-ok', '1'); }catch(e){}
+    bar.hidden = true;
+  });
+})();
 </script>
 </body>
 </html>
