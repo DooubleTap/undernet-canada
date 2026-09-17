@@ -1,539 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#Canada @ Undernet - Canadian IRC Community</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#Canada @ Undernet — Canadian IRC, English &amp; Français</title>
+<meta name="description" content="#Canada on the Undernet IRC network. Bilingual (English/Français), open 24/7, no account needed. Connect with any IRC client or use the webchat.">
+<meta property="og:title" content="#Canada @ Undernet">
+<meta property="og:description" content="Undernet's bilingual Canadian channel. Connect with any IRC client or chat right in your browser.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<style>
+:root{
+  --bg:#0b0e13;
+  --bg2:#10141b;
+  --panel:#151a23;
+  --panel2:#1a2029;
+  --border:#242c38;
+  --border2:#2e3947;
+  --text:#d7dee8;
+  --muted:#8b98a9;
+  --faint:#5c6a7d;
+  --accent:#e8433f;
+  --accent-soft:#ff6b57;
+  --gold:#e5b567;
+  --green:#4ec98a;
+  --blue:#58a6ff;
+  --purple:#bc8cff;
+  --cyan:#39c5cf;
+  --code-bg:#0d1117;
+  --radius:10px;
+  --mono:'Cascadia Code','JetBrains Mono',Consolas,'Fira Code',monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+body{background:var(--bg);color:var(--text);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,67,63,.35)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.88em;background:var(--panel2);border:1px solid var(--border);padding:1px 6px;border-radius:5px;color:var(--gold)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h2{font-size:27px;letter-spacing:-.4px;line-height:1.2}
+h3{font-size:17px;letter-spacing:-.2px}
+.lede{color:var(--muted);max-width:66ch;margin-top:10px}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #2c3e50 75%, #ff4757 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: #ecf0f1;
-        }
+/* ---------- top bar ---------- */
+header.top{
+  position:sticky;top:0;z-index:60;
+  background:rgba(11,14,19,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.top .wrap{display:flex;align-items:center;gap:26px;height:60px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.3px;color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand svg{width:20px;height:20px;flex-shrink:0}
+.brand .hash{color:var(--accent)}
+nav.links{display:flex;gap:4px;margin-left:auto}
+nav.links a{
+  color:var(--muted);font-size:14px;padding:6px 11px;border-radius:7px;
+}
+nav.links a:hover{color:var(--text);background:var(--panel);text-decoration:none}
+.lang{
+  display:flex;border:1px solid var(--border2);border-radius:8px;overflow:hidden;flex-shrink:0;
+}
+.lang button{
+  background:transparent;border:0;color:var(--faint);font:600 12px var(--sans);
+  padding:5px 11px;cursor:pointer;letter-spacing:.5px;
+}
+.lang button.on{background:var(--accent);color:#fff}
+.lang button:not(.on):hover{color:var(--text);background:var(--panel)}
+.menu-btn{display:none;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;margin-left:auto}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+/* ---------- hero ---------- */
+.hero{
+  padding:64px 0 56px;border-bottom:1px solid var(--border);
+  background:
+    radial-gradient(ellipse 55% 130% at 78% -25%, rgba(232,67,63,.14), transparent 70%),
+    radial-gradient(ellipse 45% 90% at 12% -10%, rgba(229,181,103,.06), transparent 70%);
+}
+.hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+  letter-spacing:1.2px;text-transform:uppercase;color:var(--faint);margin-bottom:16px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(78,201,138,.15)}
+.hero h1{font-size:46px;line-height:1.05;letter-spacing:-1.5px;font-weight:800}
+.hero h1 .hash{color:var(--accent)}
+.hero p.tagline{color:var(--muted);font-size:17.5px;margin-top:16px;max-width:52ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:11px;margin-top:28px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;
+  padding:11px 19px;border-radius:9px;border:1px solid var(--border2);
+  background:var(--panel);color:var(--text);cursor:pointer;font-family:var(--sans);
+  transition:border-color .15s,background .15s,transform .15s;
+}
+.btn:hover{border-color:var(--faint);background:var(--panel2);text-decoration:none;transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
+.btn .arrow{opacity:.65}
 
-        .header {
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 71, 87, 0.2);
-        }
+/* ---------- irc window mock ---------- */
+.ircwin{
+  background:var(--code-bg);border:1px solid var(--border);border-radius:12px;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);overflow:hidden;font-family:var(--mono);font-size:12.5px;
+}
+.ircwin .bar{
+  display:flex;align-items:center;gap:7px;padding:9px 13px;
+  background:var(--panel2);border-bottom:1px solid var(--border);
+}
+.ircwin .bar i{width:10px;height:10px;border-radius:50%;background:#3a4453;display:block}
+.ircwin .bar i:nth-child(1){background:#e8433f}
+.ircwin .bar i:nth-child(2){background:var(--gold)}
+.ircwin .bar i:nth-child(3){background:var(--green)}
+.ircwin .bar span{margin-left:8px;color:var(--faint);font-size:11.5px;letter-spacing:.3px}
+.ircwin .body{padding:14px 15px;line-height:1.85;overflow-x:auto}
+.ircwin .ts{color:#3f4b5c}
+.ircwin .sys{color:#586e81}
+.ircwin .n1{color:var(--cyan)}
+.ircwin .n2{color:var(--purple)}
+.ircwin .n3{color:var(--green)}
+.ircwin .bot{color:var(--accent-soft);font-weight:600}
+.ircwin .notice{color:var(--gold)}
+.ircwin .you{color:var(--blue)}
+.ircwin .caret{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff4757, #2c3e50, #ff4757);
-            border-radius: 22px;
-            z-index: -1;
-            opacity: 0.3;
-        }
+/* ---------- facts strip ---------- */
+.facts{border-bottom:1px solid var(--border);background:var(--bg2)}
+.facts .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;padding:0}
+.fact{padding:20px 22px;border-right:1px solid var(--border)}
+.fact:last-child{border-right:0}
+.fact dt{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.fact dd{font-family:var(--mono);font-size:13.5px;color:var(--text)}
+.fact dd.hl{color:var(--gold)}
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
+/* ---------- sections ---------- */
+section{padding:74px 0;border-bottom:1px solid var(--border)}
+section>.wrap>header{margin-bottom:34px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
 
-        .subtitle {
-            font-size: 1.3rem;
-            color: #bdc3c7;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
+/* ---------- cards / grids ---------- */
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;transition:border-color .15s,transform .15s;
+}
+.card:hover{border-color:var(--border2)}
+.card h3{margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px}
 
-        .network-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
-        }
+/* steps */
+.step{position:relative;padding-left:52px}
+.step .num{
+  position:absolute;left:0;top:-2px;width:34px;height:34px;border-radius:9px;
+  background:var(--panel2);border:1px solid var(--border2);color:var(--accent-soft);
+  font:700 14px var(--mono);display:flex;align-items:center;justify-content:center;
+}
 
-        .network-badge:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
-        }
+/* copy field */
+.copyline{
+  display:flex;align-items:center;gap:10px;background:var(--code-bg);
+  border:1px solid var(--border);border-radius:8px;padding:9px 10px 9px 14px;margin-top:10px;
+}
+.copyline code{background:none;border:0;padding:0;color:#c9d1d9;font-size:13px;white-space:nowrap;overflow-x:auto;flex:1}
+.copyline code .cmd{color:var(--accent-soft)}
+.copybtn{
+  background:var(--panel2);border:1px solid var(--border2);border-radius:6px;color:var(--muted);
+  padding:4px 10px;font:600 11px var(--sans);cursor:pointer;flex-shrink:0;letter-spacing:.4px;
+}
+.copybtn:hover{color:var(--text);border-color:var(--faint)}
+.copybtn.ok{color:var(--green);border-color:var(--green)}
 
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
+/* client cards */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.chip{
+  background:var(--panel);border:1px solid var(--border2);border-radius:99px;color:var(--muted);
+  padding:5px 14px;font:600 12.5px var(--sans);cursor:pointer;
+}
+.chip:hover{color:var(--text)}
+.chip.on{background:rgba(232,67,63,.12);border-color:rgba(232,67,63,.45);color:var(--accent-soft)}
+.client{display:flex;flex-direction:column}
+.client.hide{display:none}
+.client .top-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:7px}
+.client h3{font-size:16px}
+.client .plat{font:600 10.5px var(--sans);letter-spacing:.8px;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.client p{flex:1;margin-bottom:14px}
+.client a.get{font-size:13.5px;font-weight:600;color:var(--accent-soft)}
+.tagrow{display:flex;gap:6px;margin-top:10px}
+.tag{font:600 10px var(--sans);letter-spacing:.7px;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--border2);color:var(--faint)}
+.tag.rec{color:var(--green);border-color:rgba(78,201,138,.4);background:rgba(78,201,138,.07)}
 
-        .card {
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 71, 87, 0.15);
-            transition: all 0.3s ease;
-            position: relative;
-        }
+/* webchat */
+.chatbox{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel)}
+.chatbox .placeholder{padding:52px 24px;text-align:center}
+.chatbox .placeholder p{color:var(--muted);font-size:14px;margin:10px auto 20px;max-width:52ch}
+.chatbox iframe{width:100%;height:560px;border:0;display:block;background:var(--code-bg)}
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 71, 87, 0.3);
-        }
+/* bot */
+.bot-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:start}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{
+  text-align:left;padding:9px 13px;background:var(--panel2);color:var(--muted);
+  font-size:10.5px;text-transform:uppercase;letter-spacing:1.1px;border:1px solid var(--border);
+}
+td{padding:8px 13px;border:1px solid var(--border);vertical-align:top}
+td code{white-space:nowrap}
+tr:nth-child(even) td{background:rgba(255,255,255,.014)}
 
-        .card h2 {
-            color: #ff4757;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* rules */
+.rules{counter-reset:r}
+.rule{
+  display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);
+}
+.rule:last-child{border-bottom:0}
+.rule .idx{font:700 13px var(--mono);color:var(--accent);flex-shrink:0;width:26px;padding-top:2px}
+.rule strong{display:block;margin-bottom:3px}
+.rule span{color:var(--muted);font-size:14px}
 
-        .card-icon {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* faq */
+details{border:1px solid var(--border);border-radius:9px;background:var(--panel);margin-bottom:10px}
+details[open]{border-color:var(--border2)}
+summary{
+  padding:15px 18px;cursor:pointer;font-weight:600;font-size:15px;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';color:var(--accent);font-family:var(--mono);font-size:17px;flex-shrink:0}
+details[open] summary::after{content:'–'}
+details .answer{padding:0 18px 17px;color:var(--muted);font-size:14.5px;max-width:74ch}
 
-        .connection-options {
-            display: grid;
-            gap: 15px;
-        }
+/* callout */
+.note{
+  background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.25);
+  border-left:3px solid var(--blue);border-radius:8px;padding:13px 16px;font-size:14px;margin-top:18px;
+}
+.note.warn{background:rgba(229,181,103,.06);border-color:rgba(229,181,103,.3);border-left-color:var(--gold)}
 
-        .connect-button {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            border: 2px solid #52616b;
-            padding: 18px 25px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: #ecf0f1;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+/* footer */
+footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
+.foot-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:34px}
+.foot-col h4{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
+.foot-col a{display:block;color:var(--muted);font-size:13.5px;padding:3px 0}
+.foot-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.leaf-mark{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
+.leaf-mark svg{width:15px;height:15px}
 
-        .connect-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 71, 87, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .connect-button:hover::before {
-            left: 100%;
-        }
-
-        .connect-button:hover {
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            color: white;
-            border-color: #ff4757;
-            transform: translateX(5px);
-        }
-
-        .button-icon {
-            font-size: 1.4rem;
-        }
-
-        .webchat-highlight {
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            color: white;
-            border-color: #ff4757;
-        }
-
-        .webchat-highlight:hover {
-            background: linear-gradient(135deg, #d50000, #b71c1c);
-        }
-
-        .rules-card {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(44, 62, 80, 0.95));
-        }
-
-        .rules-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .rule-item {
-            background: rgba(52, 73, 94, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #ff4757;
-            transition: all 0.3s ease;
-        }
-
-        .rule-item:hover {
-            background: rgba(52, 73, 94, 0.95);
-            transform: translateX(5px);
-        }
-
-        .rule-number {
-            font-weight: 700;
-            color: #ff4757;
-            font-size: 1.1rem;
-        }
-
-        .stats-section {
-            background: #2f3b43;
-            backdrop-filter: blur(20px);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .stat-item {
-            padding: 25px;
-            background: linear-gradient(135deg, #3b4a54, #2c3e50);
-            border-radius: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            background: linear-gradient(135deg, #ff4757, #d50000);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #ff6b81;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .stat-item:hover .stat-number {
-            color: white;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 40px;
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            margin-top: 40px;
-            border: 1px solid rgba(255, 71, 87, 0.15);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: #ff4757;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: #d50000;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 40px 20px;
-            }
-            
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .rules-list {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+@media(max-width:940px){
+  .hero .wrap{grid-template-columns:1fr;gap:38px}
+  .hero h1{font-size:36px}
+  .facts .wrap{grid-template-columns:repeat(3,1fr)}
+  .fact:nth-child(3){border-right:0}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .bot-wrap{grid-template-columns:1fr;gap:26px}
+}
+@media(max-width:680px){
+  nav.links{display:none}
+  nav.links.open{
+    display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;
+    background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px 16px;gap:2px;
+  }
+  .menu-btn{display:block}
+  .lang{margin-left:14px}
+  .facts .wrap{grid-template-columns:repeat(2,1fr)}
+  .fact{border-right:0;border-bottom:1px solid var(--border)}
+  .g3,.g2{grid-template-columns:1fr}
+  .hero h1{font-size:31px}
+  section{padding:56px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header Section -->
-        <div class="header fade-in">
-            <h1>#Canada @ Undernet</h1>
-            <p class="subtitle">The Official Canadian IRC Community on Undernet</p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #bdc3c7;">
-                A bilingual channel (English & Français) for Canadians and friends of Canada to chat
-            </p>
-            <a href="#connect" class="network-badge">
-                <span>🌐</span>
-                <span>Connect to Undernet IRC</span>
-            </a>
-        </div>
 
-        <!-- Stats Section -->
-        <div class="stats-section fade-in">
-            <h2 style="color: #ff4757; margin-bottom: 10px; font-size: 2rem;">Join Our Community</h2>
-            <p style="color: #dfe4ea; font-size: 1.1rem;">Connect with Canadians from coast to coast</p>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span>Always Online</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">🍁</span>
-                    <span>Canadian Pride</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">2</span>
-                    <span>Languages</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">∞</span>
-                    <span>Good Times</span>
-                </div>
-            </div>
-        </div>
+<!-- ===================== TOP BAR ===================== -->
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100" fill="#e8433f" aria-hidden="true"><path d="M50 4l4 16 9-4-3 14 16-5-4 9 20-2-7 9 12 7-31 8 6 18-16-4-2 6 1 11h-8l1-11-2-6-16 4 6-18-31-8 12-7-7-9 20 2-4-9 16 5-3-14 9 4z"/></svg>
+      <span><span class="hash">#</span>Canada</span>
+    </a>
+    <button class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+    <nav class="links" id="navlinks">
+      <a href="#connect" data-en="Connect" data-fr="Se connecter">Connect</a>
+      <a href="#webchat" data-en="Webchat" data-fr="Webchat">Webchat</a>
+      <a href="#clients" data-en="Clients" data-fr="Clients">Clients</a>
+      <a href="#bot" data-en="Bot" data-fr="Robot">Bot</a>
+      <a href="#rules" data-en="Rules" data-fr="Règles">Rules</a>
+      <a href="#faq" data-en="FAQ" data-fr="FAQ">FAQ</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="btn-en" class="on" onclick="setLang('en')">EN</button>
+      <button id="btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</header>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Connection Options -->
-            <div class="card fade-in" id="connect">
-                <h2><span class="card-icon">💬</span>Webchat & Quick Connect</h2>
-                <div class="connection-options">
-                    <a href="https://chat.undernet.org/" target="_blank" class="connect-button webchat-highlight">
-                        <span>
-                            <strong>🌐 Undernet Webchat</strong><br>
-                            <small>Instant access - no download needed</small>
-                        </span>
-                        <span class="button-icon">→</span>
-                    </a>
-                    <a href="https://kiwiirc.com/nextclient/#irc://irc.undernet.org:+6697/#Canada" target="_blank" class="connect-button">
-                        <span>
-                            <strong>🥝 KiwiIRC</strong><br>
-                            <small>Modern web-based client</small>
-                        </span>
-                        <span class="button-icon">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Windows Clients -->
-            <div class="card fade-in">
-                <h2><span class="card-icon">🪟</span>Windows Clients</h2>
-                <div class="connection-options">
-                    <a href="https://www.mirc.com/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>mIRC</strong><br>
-                            <small>Classic IRC client for Windows</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                    <a href="https://hexchat.github.io/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>AdiIrc</strong><br>
-                            <small>Exactly like mIRC, but better</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                    <a href="https://adiirc.com/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>IRCCloud</strong><br>
-                            <small>Modern cloud-based IRC</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Linux Clients -->
-            <div class="card fade-in">
-                <h2><span class="card-icon">🐧</span>Linux Clients</h2>
-                <div class="connection-options">
-                    <a href="https://irssi.org/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>Irssi</strong><br>
-                            <small>Terminal-based IRC client</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                    <a href="https://weechat.org/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>WeeChat</strong><br>
-                            <small>Fast, light & extensible</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                    <a href="https://hexchat.github.io/" target="_blank" class="connect-button">
-                        <span>
-                            <strong>HexChat</strong><br>
-                            <small>Cross-platform IRC client</small>
-                        </span>
-                        <span class="button-icon">↗</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rules Section -->
-        <div class="card rules-card fade-in">
-            <h2><span class="card-icon">📋</span>Channel Rules & Guidelines</h2>
-            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #bdc3c7;">
-                Please review and follow these guidelines to maintain a friendly environment for everyone:
-            </p>
-            <div class="rules-list">
-                <div class="rule-item">
-                    <div class="rule-number">01.</div>
-                    <strong>Be Respectful</strong><br>
-                    Treat all members with courtesy and respect, regardless of background or opinions.
-                </div>
-                <div class="rule-item">
-                    <div class="rule-number">02.</div>
-                    <strong>No Spam or Flooding</strong><br>
-                    Avoid excessive posting, repeating messages, or flooding the channel.
-                </div>
-                <div class="rule-item">
-                    <div class="rule-number">03.</div>
-                    <strong>Stay On Topic</strong><br>
-                    Keep discussions relevant and consider moving off-topic conversations to private messages.
-                </div>
-                <div class="rule-item">
-                    <div class="rule-number">04.</div>
-                    <strong>No Harassment</strong><br>
-                    Harassment, trolling, or abusive behavior will not be tolerated.
-                </div>
-                <div class="rule-item">
-                    <div class="rule-number">05.</div>
-                    <strong>Both Languages Welcome</strong><br>
-                    Feel free to chat in English or Français - we're a bilingual community!
-                </div>
-                <div class="rule-item">
-                    <div class="rule-number">06.</div>
-                    <strong>No Illegal Content</strong><br>
-                    Do not share or discuss illegal activities, pirated content, or inappropriate material.
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-links">
-                <a href="https://www.undernet.org/" target="_blank" class="footer-link">Undernet Network</a>
-                <a href="https://www.undernet.org/servers.php" target="_blank" class="footer-link">Server List</a>
-                <a href="https://cservice.undernet.org/live" target="_blank" class="footer-link">CService</a>
-                <a href="https://www.undernet.org/help.php" target="_blank" class="footer-link">Help & Support</a>
-            </div>
-            <p style="color: #dfe4ea; margin-bottom: 15px;">
-                Server: <code>irc.undernet.org:6667</code> | Channel: <code>#Canada</code>
-            </p>
-            <p style="color: #a4b0be; font-size: 0.9rem;">
-                © 2025 #Canada @ Undernet. Made with 🍁 for the Canadian IRC community.  
-                <a href="https://github.com/DooubleTap/undernet-canada/" target="_blank" style="color:#ff6b81; text-decoration:underline;">Contribute on GitHub</a>
-            </p>
-        </div>
+<!-- ===================== HERO ===================== -->
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="dot"></span><span data-en="Undernet · open 24/7" data-fr="Undernet · ouvert 24/7">Undernet · open 24/7</span></div>
+      <h1><span class="hash">#</span>Canada</h1>
+      <p class="tagline"
+         data-en="Undernet's Canadian channel. English and Français, coast to coast — no account, no app, no algorithm. Just a room full of people talking."
+         data-fr="Le canal canadien d'Undernet. En anglais et en français, d'un océan à l'autre — sans compte, sans appli, sans algorithme. Juste une salle remplie de gens qui jasent.">
+        Undernet's Canadian channel. English and Français, coast to coast — no account, no app, no algorithm. Just a room full of people talking.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#webchat">
+          <span data-en="Chat in your browser" data-fr="Jaser dans le navigateur">Chat in your browser</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="btn" href="#connect">
+          <span data-en="Use an IRC client" data-fr="Utiliser un client IRC">Use an IRC client</span>
+        </a>
+      </div>
     </div>
 
-    <script>
-        // Smooth scrolling for anchors
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+    <div class="ircwin" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span>#Canada — irc.undernet.org</span></div>
+      <div class="body">
+        <div><span class="sys">*** Now talking in #Canada</span></div>
+        <div><span class="sys">*** Topic: Bienvenue au #Canada | EN &amp; FR | be decent</span></div>
+        <div><span class="ts">21:04</span> <span class="n1">&lt;marie_qc&gt;</span> salut la gang, y fait -22 icitte</div>
+        <div><span class="ts">21:04</span> <span class="n2">&lt;dave_yyc&gt;</span> -22 and you're complaining? try january</div>
+        <div><span class="ts">21:05</span> <span class="n3">&lt;pei_steve&gt;</span> it's +9 on the island lol</div>
+        <div><span class="ts">21:05</span> <span class="sys">*** guest_42 has joined #Canada</span></div>
+        <div><span class="ts">21:05</span> <span class="bot">&lt;OhCanada&gt;</span> Welcome to #Canada, guest_42 — type !help</div>
+        <div><span class="ts">21:06</span> <span class="you">&lt;guest_42&gt;</span> !help</div>
+        <div><span class="notice">-OhCanada- Quick Help: Type !help &lt;command&gt; for details</span></div>
+        <div><span class="ts">21:06</span> <span class="sys">*** OhCanada sets mode +v guest_42</span></div>
+        <div><span class="ts">21:07</span> <span class="you">&lt;guest_42&gt;</span> <span class="caret"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // Animate cards on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+<!-- ===================== FACTS ===================== -->
+<div class="facts">
+  <dl class="wrap">
+    <div class="fact"><dt data-en="Network" data-fr="Réseau">Network</dt><dd>Undernet</dd></div>
+    <div class="fact"><dt data-en="Server" data-fr="Serveur">Server</dt><dd>irc.undernet.org</dd></div>
+    <div class="fact"><dt data-en="Ports" data-fr="Ports">Ports</dt><dd>6660-6669, 7000</dd></div>
+    <div class="fact"><dt data-en="Channel" data-fr="Canal">Channel</dt><dd class="hl">#Canada</dd></div>
+    <div class="fact"><dt data-en="Languages" data-fr="Langues">Languages</dt><dd>EN · FR</dd></div>
+    <div class="fact"><dt data-en="Channel bot" data-fr="Robot du canal">Channel bot</dt><dd class="hl">OhCanada</dd></div>
+  </dl>
+</div>
 
-        document.querySelectorAll('.card, .stats-section').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-    </script>
+<!-- ===================== CONNECT ===================== -->
+<section id="connect">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="Getting in" data-fr="Pour entrer">Getting in</div>
+      <h2 data-en="Three steps, about two minutes" data-fr="Trois étapes, environ deux minutes">Three steps, about two minutes</h2>
+      <p class="lede"
+         data-en="IRC has no sign-up. You pick a client, point it at a server, and join the room. That's the whole thing."
+         data-fr="IRC n'a pas d'inscription. Tu choisis un client, tu le pointes vers un serveur, et tu entres dans la salle. C'est tout.">
+        IRC has no sign-up. You pick a client, point it at a server, and join the room. That's the whole thing.
+      </p>
+    </header>
+
+    <div class="grid g3">
+      <div class="card step">
+        <div class="num">1</div>
+        <h3 data-en="Pick a client" data-fr="Choisis un client">Pick a client</h3>
+        <p data-en="Any IRC client works. In a hurry? Skip this and use the webchat below — nothing to install."
+           data-fr="N'importe quel client IRC fonctionne. Pressé? Saute cette étape et utilise le webchat plus bas — rien à installer.">
+          Any IRC client works. In a hurry? Skip this and use the webchat below — nothing to install.</p>
+      </div>
+      <div class="card step">
+        <div class="num">2</div>
+        <h3 data-en="Connect to Undernet" data-fr="Connecte-toi à Undernet">Connect to Undernet</h3>
+        <p data-en="Point it at the Undernet round-robin. Canadians can use the regional alias instead."
+           data-fr="Pointe-le vers l'adresse rotative d'Undernet. Les Canadiens peuvent utiliser l'alias régional.">
+          Point it at the Undernet round-robin. Canadians can use the regional alias instead.</p>
+        <div class="copyline">
+          <code><span class="cmd">/server</span> irc.undernet.org 6667</code>
+          <button class="copybtn" data-copy="/server irc.undernet.org 6667">COPY</button>
+        </div>
+        <div class="copyline">
+          <code><span class="cmd">/server</span> ca.undernet.org 6667</code>
+          <button class="copybtn" data-copy="/server ca.undernet.org 6667">COPY</button>
+        </div>
+      </div>
+      <div class="card step">
+        <div class="num">3</div>
+        <h3 data-en="Join the channel" data-fr="Entre dans le canal">Join the channel</h3>
+        <p data-en="Pick any nickname that isn't taken, then join. Say hello — someone will answer."
+           data-fr="Choisis un pseudo qui n'est pas pris, puis entre. Dis bonjour — quelqu'un va répondre.">
+          Pick any nickname that isn't taken, then join. Say hello — someone will answer.</p>
+        <div class="copyline">
+          <code><span class="cmd">/join</span> #Canada</code>
+          <button class="copybtn" data-copy="/join #Canada">COPY</button>
+        </div>
+        <div class="copyline">
+          <code><span class="cmd">/nick</span> your_nick</code>
+          <button class="copybtn" data-copy="/nick your_nick">COPY</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="note warn">
+      <b data-en="About encryption:" data-fr="À propos du chiffrement :">About encryption:</b>
+      <span data-en="Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use the browser webchat or a bouncer such as ZNC."
+            data-fr="Undernet n'offre pas de TLS — le port sécurisé habituel 6697 est fermé. Ta connexion au réseau n'est pas chiffrée : considère tout ce que tu écris comme public. Pour un lien chiffré, utilise le webchat ou un bouncer comme ZNC.">
+        Undernet does not offer TLS — the usual secure port 6697 is closed. Your connection to the network is in the clear, so treat anything you type as public. If you want an encrypted hop, use the browser webchat or a bouncer such as ZNC.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WEBCHAT ===================== -->
+<section id="webchat">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="No install" data-fr="Sans installation">No install</div>
+      <h2 data-en="Chat right here" data-fr="Jase directement ici">Chat right here</h2>
+      <p class="lede"
+         data-en="A full IRC client in the page, connected straight to #Canada. Nothing loads until you ask it to."
+         data-fr="Un vrai client IRC dans la page, branché directement sur #Canada. Rien ne se charge avant que tu le demandes.">
+        A full IRC client in the page, connected straight to #Canada. Nothing loads until you ask it to.
+      </p>
+    </header>
+
+    <div class="chatbox" id="chatbox">
+      <div class="placeholder" id="chat-placeholder">
+        <h3 data-en="Launch the webchat" data-fr="Lancer le webchat">Launch the webchat</h3>
+        <p data-en="Opens KiwiIRC inside this page and connects you to #Canada on Undernet. Pick any nickname when it asks."
+           data-fr="Ouvre KiwiIRC dans cette page et te connecte à #Canada sur Undernet. Choisis le pseudo que tu veux quand on te le demande.">
+          Opens KiwiIRC inside this page and connects you to #Canada on Undernet. Pick any nickname when it asks.</p>
+        <button class="btn primary" id="launch-chat">
+          <span data-en="Connect to #Canada" data-fr="Se connecter à #Canada">Connect to #Canada</span>
+          <span class="arrow">→</span>
+        </button>
+        <p style="margin-top:18px;font-size:13px">
+          <a href="https://chat.undernet.org/" target="_blank" rel="noopener"
+             data-en="Prefer Undernet's own webchat? Open it in a new tab ↗"
+             data-fr="Tu préfères le webchat officiel d'Undernet? Ouvre-le dans un nouvel onglet ↗">
+            Prefer Undernet's own webchat? Open it in a new tab ↗</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLIENTS ===================== -->
+<section id="clients">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="Software" data-fr="Logiciels">Software</div>
+      <h2 data-en="Pick a client" data-fr="Choisis un client">Pick a client</h2>
+      <p class="lede"
+         data-en="All of these speak plain IRC and all of them reach Undernet. Filter by what you're running."
+         data-fr="Tous parlent le IRC standard et tous rejoignent Undernet. Filtre selon ton système.">
+        All of these speak plain IRC and all of them reach Undernet. Filter by what you're running.
+      </p>
+    </header>
+
+    <div class="chips" id="chips">
+      <button class="chip on" data-plat="all" data-en="Everything" data-fr="Tout">Everything</button>
+      <button class="chip" data-plat="win">Windows</button>
+      <button class="chip" data-plat="mac">macOS</button>
+      <button class="chip" data-plat="nix">Linux</button>
+      <button class="chip" data-plat="web" data-en="Web &amp; mobile" data-fr="Web et mobile">Web &amp; mobile</button>
+    </div>
+
+    <div class="grid g3" id="clientgrid">
+      <div class="card client" data-plat="win">
+        <div class="top-row"><h3>mIRC</h3><span class="plat">Windows</span></div>
+        <p data-en="The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware."
+           data-fr="Le classique. Trente ans de scripts derrière lui et encore le choix par défaut de bien des habitués d'Undernet. Partagiciel.">
+          The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware.</p>
+        <a class="get" href="https://www.mirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <div class="tagrow"><span class="tag rec" data-en="Popular here" data-fr="Populaire ici">Popular here</span></div>
+      </div>
+
+      <div class="card client" data-plat="win">
+        <div class="top-row"><h3>AdiIRC</h3><span class="plat">Windows</span></div>
+        <p data-en="Free, looks and scripts almost exactly like mIRC, and it's actively maintained. The easy upgrade if you already know mIRC."
+           data-fr="Gratuit, ressemble à mIRC et utilise presque les mêmes scripts, mais activement maintenu. La mise à niveau évidente si tu connais déjà mIRC.">
+          Free, looks and scripts almost exactly like mIRC, and it's actively maintained. The easy upgrade if you already know mIRC.</p>
+        <a class="get" href="https://adiirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <div class="tagrow"><span class="tag" data-en="Free" data-fr="Gratuit">Free</span></div>
+      </div>
+
+      <div class="card client" data-plat="win mac nix">
+        <div class="top-row"><h3>HexChat</h3><span class="plat">Win · Linux</span></div>
+        <p data-en="Open source, no-nonsense, works the same everywhere. A good first client if you've never used IRC before."
+           data-fr="Libre, sans chichi, identique partout. Un bon premier client si tu n'as jamais utilisé IRC.">
+          Open source, no-nonsense, works the same everywhere. A good first client if you've never used IRC before.</p>
+        <a class="get" href="https://hexchat.github.io/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
+        <div class="tagrow"><span class="tag rec" data-en="Good first client" data-fr="Bon premier client">Good first client</span></div>
+      </div>
+
+      <div class="card client" data-plat="nix mac">
+        <div class="top-row"><h3>irssi</h3><span class="plat">Terminal</span></div>
+        <p data-en="Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect."
+           data-fr="Tourne dans un terminal, tourne sans fin, tourne sur le serveur où tu te connectes en SSH. Avec tmux, tu ne te déconnectes jamais.">
+          Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect.</p>
+        <a class="get" href="https://irssi.org/" target="_blank" rel="noopener" data-en="Get irssi ↗" data-fr="Obtenir irssi ↗">Get irssi ↗</a>
+        <div class="tagrow"><span class="tag" data-en="Keyboard only" data-fr="Clavier seulement">Keyboard only</span></div>
+      </div>
+
+      <div class="card client" data-plat="nix mac">
+        <div class="top-row"><h3>WeeChat</h3><span class="plat">Terminal</span></div>
+        <p data-en="The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone."
+           data-fr="L'autre grand client en terminal : rapide, scriptable, avec une vraie interface à distance si tu veux ta session sur ton téléphone.">
+          The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone.</p>
+        <a class="get" href="https://weechat.org/" target="_blank" rel="noopener" data-en="Get WeeChat ↗" data-fr="Obtenir WeeChat ↗">Get WeeChat ↗</a>
+        <div class="tagrow"><span class="tag" data-en="Scriptable" data-fr="Scriptable">Scriptable</span></div>
+      </div>
+
+      <div class="card client" data-plat="web">
+        <div class="top-row"><h3>IRCCloud</h3><span class="plat" data-en="Web · iOS · Android" data-fr="Web · iOS · Android">Web · iOS · Android</span></div>
+        <p data-en="Hosted IRC that stays connected while you're away and syncs to your phone. Free tier disconnects after a couple of hours idle."
+           data-fr="IRC hébergé qui reste connecté en ton absence et se synchronise avec ton téléphone. La version gratuite se déconnecte après quelques heures d'inactivité.">
+          Hosted IRC that stays connected while you're away and syncs to your phone. Free tier disconnects after a couple of hours idle.</p>
+        <a class="get" href="https://www.irccloud.com/" target="_blank" rel="noopener" data-en="Open IRCCloud ↗" data-fr="Ouvrir IRCCloud ↗">Open IRCCloud ↗</a>
+        <div class="tagrow"><span class="tag rec" data-en="Stays online" data-fr="Reste en ligne">Stays online</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BOT ===================== -->
+<section id="bot">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="Channel bot" data-fr="Robot du canal">Channel bot</div>
+      <h2>OhCanada</h2>
+      <p class="lede"
+         data-en="OhCanada keeps the room running: it hands out voice to people who join the conversation, holds the topic in place, helps the ops with bans and modes, and answers questions about itself."
+         data-fr="OhCanada fait tourner la salle : il donne le voice à ceux qui participent, garde le sujet en place, aide les ops avec les bannissements et les modes, et répond aux questions sur lui-même.">
+        OhCanada keeps the room running: it hands out voice to people who join the conversation, holds the topic in place, helps the ops with bans and modes, and answers questions about itself.
+      </p>
+    </header>
+
+    <div class="bot-wrap">
+      <div>
+        <table>
+          <tr>
+            <th style="width:38%" data-en="Command" data-fr="Commande">Command</th>
+            <th data-en="What it does" data-fr="Ce que ça fait">What it does</th>
+          </tr>
+          <tr><td><code>!help</code></td><td data-en="Everything it can do — answered by notice, never in the channel" data-fr="Tout ce qu'il sait faire — répondu par notice, jamais dans le canal">Everything it can do — answered by notice, never in the channel</td></tr>
+          <tr><td><code>!help &lt;command&gt;</code></td><td data-en="Usage, description and an example for one command" data-fr="Utilisation, description et exemple pour une commande">Usage, description and an example for one command</td></tr>
+          <tr><td><code>!verify</code></td><td data-en="Your access level, flags and registered hosts" data-fr="Ton niveau d'accès, tes flags et tes hôtes enregistrés">Your access level, flags and registered hosts</td></tr>
+          <tr><td><code>!info &lt;text&gt;</code></td><td data-en="Set the infoline people see in your whois" data-fr="Définit la ligne d'info visible dans ton whois">Set the infoline people see in your whois</td></tr>
+          <tr><td><code>!ops &lt;reason&gt;</code></td><td data-en="Quietly page the channel staff when something is wrong" data-fr="Alerte discrètement l'équipe du canal quand ça va mal">Quietly page the channel staff when something is wrong</td></tr>
+          <tr><td><code>!bans</code></td><td data-en="What's on the banlist right now" data-fr="Ce qui est sur la liste de bannissement en ce moment">What's on the banlist right now</td></tr>
+        </table>
+        <p style="margin-top:14px;font-size:13.5px;color:var(--faint)"
+           data-en="Every reply arrives as a private notice, so nobody has to watch the channel fill up with bot output."
+           data-fr="Chaque réponse arrive en notice privée : personne n'a à subir un canal rempli de sorties de robot.">
+          Every reply arrives as a private notice, so nobody has to watch the channel fill up with bot output.</p>
+      </div>
+
+      <div class="card">
+        <h3 data-en="The full bot guide" data-fr="Le guide complet du robot">The full bot guide</h3>
+        <p data-en="Every command, every access level, the module system, the auto-voice rules and the protections — written out properly with examples."
+           data-fr="Toutes les commandes, tous les niveaux d'accès, le système de modules, les règles d'auto-voice et les protections — le tout expliqué avec des exemples.">
+          Every command, every access level, the module system, the auto-voice rules and the protections — written out properly with examples.</p>
+        <a class="btn primary" href="docs.html" style="margin-top:16px">
+          <span data-en="Open the documentation" data-fr="Ouvrir la documentation">Open the documentation</span>
+          <span class="arrow">→</span>
+        </a>
+        <p style="margin-top:16px;font-size:13px;color:var(--faint)"
+           data-en="OhCanada runs lmao.tcl on eggdrop. The script is open source."
+           data-fr="OhCanada tourne sous lmao.tcl sur eggdrop. Le script est libre.">
+          OhCanada runs lmao.tcl on eggdrop. The script is open source.</p>
+        <a style="font-size:13px" href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener">github.com/DooubleTap/lmao.tcl ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RULES ===================== -->
+<section id="rules">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="House rules" data-fr="Règles de la maison">House rules</div>
+      <h2 data-en="Six things, that's it" data-fr="Six choses, c'est tout">Six things, that's it</h2>
+      <p class="lede"
+         data-en="Nothing here should surprise anyone. The ops enforce it with a light hand, and !ops reaches them if you need help."
+         data-fr="Rien ici ne devrait surprendre personne. Les ops appliquent ça avec souplesse, et !ops les rejoint si tu as besoin d'aide.">
+        Nothing here should surprise anyone. The ops enforce it with a light hand, and !ops reaches them if you need help.
+      </p>
+    </header>
+
+    <div class="rules">
+      <div class="rule"><div class="idx">01</div><div>
+        <strong data-en="Be respectful" data-fr="Sois respectueux">Be respectful</strong>
+        <span data-en="Treat everyone with courtesy, whatever their background or opinions."
+              data-fr="Traite tout le monde avec courtoisie, peu importe son origine ou ses opinions.">Treat everyone with courtesy, whatever their background or opinions.</span>
+      </div></div>
+      <div class="rule"><div class="idx">02</div><div>
+        <strong data-en="No spam or flooding" data-fr="Pas de spam ni d'inondation">No spam or flooding</strong>
+        <span data-en="No repeated messages, pastes of a hundred lines, or advertising."
+              data-fr="Pas de messages répétés, de collages de cent lignes, ni de publicité.">No repeated messages, pastes of a hundred lines, or advertising.</span>
+      </div></div>
+      <div class="rule"><div class="idx">03</div><div>
+        <strong data-en="Keep it roughly on topic" data-fr="Reste à peu près dans le sujet">Keep it roughly on topic</strong>
+        <span data-en="Tangents are fine — long private conversations belong in a query."
+              data-fr="Les digressions sont correctes — les longues conversations privées vont en query.">Tangents are fine — long private conversations belong in a query.</span>
+      </div></div>
+      <div class="rule"><div class="idx">04</div><div>
+        <strong data-en="No harassment" data-fr="Pas de harcèlement">No harassment</strong>
+        <span data-en="Trolling, targeting people, and abuse get you removed. No warnings owed."
+              data-fr="Le trollage, le ciblage de personnes et les abus mènent à l'expulsion. Sans avertissement dû.">Trolling, targeting people, and abuse get you removed. No warnings owed.</span>
+      </div></div>
+      <div class="rule"><div class="idx">05</div><div>
+        <strong data-en="Both languages are welcome" data-fr="Les deux langues sont bienvenues">Both languages are welcome</strong>
+        <span data-en="English, français, or switching mid-sentence. Nobody has to translate for anybody."
+              data-fr="Anglais, français, ou les deux dans la même phrase. Personne n'a à traduire pour personne.">English, français, or switching mid-sentence. Nobody has to translate for anybody.</span>
+      </div></div>
+      <div class="rule"><div class="idx">06</div><div>
+        <strong data-en="Nothing illegal" data-fr="Rien d'illégal">Nothing illegal</strong>
+        <span data-en="No warez, no illegal material, no arranging any of it here."
+              data-fr="Pas de warez, pas de matériel illégal, et pas d'arrangements ici.">No warez, no illegal material, no arranging any of it here.</span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq">
+  <div class="wrap">
+    <header>
+      <div class="kicker" data-en="Questions" data-fr="Questions">Questions</div>
+      <h2 data-en="Things people ask" data-fr="Ce qu'on nous demande">Things people ask</h2>
+    </header>
+
+    <details>
+      <summary data-en="Do I need to register a nickname?" data-fr="Dois-je enregistrer un pseudo?">Do I need to register a nickname?</summary>
+      <div class="answer" data-en="No — Undernet has no NickServ and nicknames aren't owned by anyone. Pick one and use it. What does get registered on Undernet is channels, through CService and the X bot."
+           data-fr="Non — Undernet n'a pas de NickServ et les pseudos n'appartiennent à personne. Choisis-en un et utilise-le. Ce qui s'enregistre sur Undernet, ce sont les canaux, via CService et le robot X.">
+        No — Undernet has no NickServ and nicknames aren't owned by anyone. Pick one and use it. What does get registered on Undernet is channels, through CService and the X bot.</div>
+    </details>
+
+    <details>
+      <summary data-en="Why did the bot give me a + next to my name?" data-fr="Pourquoi le robot m'a-t-il donné un + à côté de mon nom?">Why did the bot give me a + next to my name?</summary>
+      <div class="answer" data-en="That's voice (+v). OhCanada gives it to people who join the conversation, and takes it back after a long stretch of silence. It's not a rank — it just marks who's actually around."
+           data-fr="C'est le voice (+v). OhCanada le donne à ceux qui participent à la conversation et le retire après un long silence. Ce n'est pas un rang — ça indique simplement qui est réellement présent.">
+        That's voice (+v). OhCanada gives it to people who join the conversation, and takes it back after a long stretch of silence. It's not a rank — it just marks who's actually around.</div>
+    </details>
+
+    <details>
+      <summary data-en="Is the connection encrypted?" data-fr="La connexion est-elle chiffrée?">Is the connection encrypted?</summary>
+      <div class="answer" data-en="Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. The browser webchat encrypts the hop between you and the webchat provider, and a bouncer like ZNC does the same. Either way, treat the channel as a public room."
+           data-fr="Pas jusqu'à Undernet — le réseau n'offre pas de TLS, donc le port 6697 ne répond pas. Le webchat chiffre le lien entre toi et le fournisseur, et un bouncer comme ZNC fait pareil. Dans tous les cas, considère le canal comme une salle publique.">
+        Not to Undernet itself — the network doesn't run TLS, so port 6697 won't answer. The browser webchat encrypts the hop between you and the webchat provider, and a bouncer like ZNC does the same. Either way, treat the channel as a public room.</div>
+    </details>
+
+    <details>
+      <summary data-en="How do I stay connected when my computer is off?" data-fr="Comment rester connecté quand mon ordi est éteint?">How do I stay connected when my computer is off?</summary>
+      <div class="answer" data-en="Run a bouncer — ZNC on a cheap VPS is the usual answer — or use IRCCloud, which does the same thing as a service. Both keep your nick in the channel and replay what you missed."
+           data-fr="Utilise un bouncer — ZNC sur un petit VPS est la réponse habituelle — ou IRCCloud, qui offre la même chose en service. Les deux gardent ton pseudo dans le canal et te rejouent ce que tu as manqué.">
+        Run a bouncer — ZNC on a cheap VPS is the usual answer — or use IRCCloud, which does the same thing as a service. Both keep your nick in the channel and replay what you missed.</div>
+    </details>
+
+    <details>
+      <summary data-en="Something's wrong in the channel. Who do I tell?" data-fr="Il y a un problème dans le canal. À qui en parler?">Something's wrong in the channel. Who do I tell?</summary>
+      <div class="answer" data-en="Type !ops followed by what's happening. It pages the channel staff privately — the channel doesn't see it, and neither does whoever caused the problem."
+           data-fr="Tape !ops suivi de ce qui se passe. Ça alerte l'équipe en privé — le canal ne le voit pas, et la personne visée non plus.">
+        Type !ops followed by what's happening. It pages the channel staff privately — the channel doesn't see it, and neither does whoever caused the problem.</div>
+    </details>
+
+    <details>
+      <summary data-en="I've never used IRC. Is it dead?" data-fr="Je n'ai jamais utilisé IRC. Est-ce que c'est mort?">I've never used IRC. Is it dead?</summary>
+      <div class="answer" data-en="It's older than the web and still running. No accounts, no feed, no engagement metrics — a channel is just people in a room, and it stays open whether or not anyone is talking. Join, idle, come back tomorrow."
+           data-fr="C'est plus vieux que le web et ça fonctionne encore. Pas de comptes, pas de fil d'actualité, pas de métriques d'engagement — un canal, c'est juste des gens dans une salle, et ça reste ouvert même quand personne ne parle. Entre, reste tranquille, reviens demain.">
+        It's older than the web and still running. No accounts, no feed, no engagement metrics — a channel is just people in a room, and it stays open whether or not anyone is talking. Join, idle, come back tomorrow.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4 data-en="Channel" data-fr="Canal">Channel</h4>
+        <a href="#connect" data-en="How to connect" data-fr="Comment se connecter">How to connect</a>
+        <a href="#rules" data-en="Channel rules" data-fr="Règles du canal">Channel rules</a>
+        <a href="docs.html" data-en="OhCanada bot guide" data-fr="Guide du robot OhCanada">OhCanada bot guide</a>
+      </div>
+      <div class="foot-col">
+        <h4>Undernet</h4>
+        <a href="https://www.undernet.org/" target="_blank" rel="noopener" data-en="Network home ↗" data-fr="Accueil du réseau ↗">Network home ↗</a>
+        <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener" data-en="Server list ↗" data-fr="Liste des serveurs ↗">Server list ↗</a>
+        <a href="https://cservice.undernet.org/live" target="_blank" rel="noopener">CService ↗</a>
+        <a href="https://www.undernet.org/help.php" target="_blank" rel="noopener" data-en="Help &amp; support ↗" data-fr="Aide et soutien ↗">Help &amp; support ↗</a>
+      </div>
+      <div class="foot-col">
+        <h4 data-en="Source" data-fr="Code source">Source</h4>
+        <a href="https://github.com/DooubleTap/undernet-canada" target="_blank" rel="noopener" data-en="This site on GitHub ↗" data-fr="Ce site sur GitHub ↗">This site on GitHub ↗</a>
+        <a href="https://github.com/DooubleTap/lmao.tcl" target="_blank" rel="noopener" data-en="The bot script ↗" data-fr="Le script du robot ↗">The bot script ↗</a>
+      </div>
+      <div class="foot-col">
+        <h4 data-en="Connect" data-fr="Connexion">Connect</h4>
+        <a href="irc://irc.undernet.org:6667/Canada">irc://irc.undernet.org/Canada</a>
+        <a href="https://chat.undernet.org/" target="_blank" rel="noopener" data-en="Undernet webchat ↗" data-fr="Webchat Undernet ↗">Undernet webchat ↗</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="leaf-mark">
+        <svg viewBox="0 0 100 100" fill="#e8433f" aria-hidden="true"><path d="M50 4l4 16 9-4-3 14 16-5-4 9 20-2-7 9 12 7-31 8 6 18-16-4-2 6 1 11h-8l1-11-2-6-16 4 6-18-31-8 12-7-7-9 20 2-4-9 16 5-3-14 9 4z"/></svg>
+        <span data-en="#Canada on Undernet — English &amp; Français" data-fr="#Canada sur Undernet — anglais et français">#Canada on Undernet — English &amp; Français</span>
+      </span>
+      <span><code>irc.undernet.org</code> · <code>#Canada</code></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- language ---------- */
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    var v = el.getAttribute('data-' + lang);
+    if(v !== null) el.innerHTML = v;
+  });
+  document.getElementById('btn-en').classList.toggle('on', lang === 'en');
+  document.getElementById('btn-fr').classList.toggle('on', lang === 'fr');
+  try{ localStorage.setItem('lang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lang'); }catch(e){}
+  if(!saved) saved = (navigator.language || 'en').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en';
+  if(saved === 'fr') setLang('fr');
+})();
+
+/* ---------- copy buttons ---------- */
+document.addEventListener('click', function(e){
+  var b = e.target.closest('.copybtn');
+  if(!b) return;
+  var txt = b.getAttribute('data-copy');
+  var done = function(){
+    var old = b.textContent;
+    b.classList.add('ok'); b.textContent = '✓';
+    setTimeout(function(){ b.classList.remove('ok'); b.textContent = old; }, 1300);
+  };
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done).catch(function(){}); }
+});
+
+/* ---------- client filter ---------- */
+document.getElementById('chips').addEventListener('click', function(e){
+  var chip = e.target.closest('.chip');
+  if(!chip) return;
+  document.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === chip); });
+  var want = chip.getAttribute('data-plat');
+  document.querySelectorAll('.client').forEach(function(card){
+    var plats = card.getAttribute('data-plat').split(' ');
+    card.classList.toggle('hide', want !== 'all' && plats.indexOf(want) === -1);
+  });
+});
+
+/* ---------- webchat (loads only on click) ---------- */
+document.getElementById('launch-chat').addEventListener('click', function(){
+  var box = document.getElementById('chatbox');
+  var frame = document.createElement('iframe');
+  frame.src = 'https://kiwiirc.com/nextclient/irc.undernet.org/#Canada';
+  frame.title = 'KiwiIRC webchat for #Canada';
+  frame.allow = 'clipboard-write';
+  box.innerHTML = '';
+  box.appendChild(frame);
+});
+
+/* ---------- mobile menu ---------- */
+document.getElementById('menu-btn').addEventListener('click', function(){
+  document.getElementById('navlinks').classList.toggle('open');
+});
+document.getElementById('navlinks').addEventListener('click', function(){
+  this.classList.remove('open');
+});
+</script>
 </body>
 </html>
