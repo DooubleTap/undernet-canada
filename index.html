@@ -550,6 +550,7 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
           </tr>
           <tr><td><code>!help</code></td><td data-en="Everything it can do — answered by notice, never in the channel" data-fr="Tout ce qu'il sait faire — répondu par notice, jamais dans le canal">Everything it can do — answered by notice, never in the channel</td></tr>
           <tr><td><code>!help &lt;command&gt;</code></td><td data-en="Usage, description and an example for one command" data-fr="Utilisation, description et exemple pour une commande">Usage, description and an example for one command</td></tr>
+          <tr><td><code>/msg OhCanada register</code></td><td data-en="Register yourself with the bot — it sends you a code to type back" data-fr="T'enregistrer auprès du robot — il t'envoie un code à retaper">Register yourself with the bot — it sends you a code to type back</td></tr>
           <tr><td><code>!verify</code></td><td data-en="Your access level, flags and registered hosts" data-fr="Ton niveau d'accès, tes flags et tes hôtes enregistrés">Your access level, flags and registered hosts</td></tr>
           <tr><td><code>!info &lt;text&gt;</code></td><td data-en="Set the infoline people see in your whois" data-fr="Définit la ligne d'info visible dans ton whois">Set the infoline people see in your whois</td></tr>
           <tr><td><code>!ops &lt;reason&gt;</code></td><td data-en="Quietly page the channel staff when something is wrong" data-fr="Alerte discrètement l'équipe du canal quand ça va mal">Quietly page the channel staff when something is wrong</td></tr>
@@ -559,6 +560,13 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
            data-en="Every reply arrives as a private notice, so nobody has to watch the channel fill up with bot output."
            data-fr="Chaque réponse arrive en notice privée : personne n'a à subir un canal rempli de sorties de robot.">
           Every reply arrives as a private notice, so nobody has to watch the channel fill up with bot output.</p>
+
+        <div class="note" style="margin-top:20px">
+          <b data-en="Registering? Hide your host first." data-fr="Tu veux t'enregistrer? Cache ton hôte d'abord.">Registering? Hide your host first.</b>
+          <span data-en="OhCanada identifies you by your hostname. Auth with X and set usermode +x before you register, so it stores your account.users.undernet.org host instead of your ISP one — nobody else can wear that host, and it does not change when your IP does."
+                data-fr="OhCanada t'identifie par ton nom d'hôte. Authentifie-toi auprès de X et active le mode +x avant de t'enregistrer, pour qu'il retienne ton hôte compte.users.undernet.org plutôt que celui de ton fournisseur — personne d'autre ne peut porter cet hôte, et il ne change pas quand ton IP change.">
+            OhCanada identifies you by your hostname. Auth with X and set usermode +x before you register, so it stores your account.users.undernet.org host instead of your ISP one — nobody else can wear that host, and it does not change when your IP does.</span>
+        </div>
       </div>
 
       <div class="card">
@@ -648,6 +656,13 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       <div class="answer" data-en="That's voice (+v). OhCanada gives it to people who join the conversation, and takes it back after a long stretch of silence. It's not a rank — it just marks who's actually around."
            data-fr="C'est le voice (+v). OhCanada le donne à ceux qui participent à la conversation et le retire après un long silence. Ce n'est pas un rang — ça indique simplement qui est réellement présent.">
         That's voice (+v). OhCanada gives it to people who join the conversation, and takes it back after a long stretch of silence. It's not a rank — it just marks who's actually around.</div>
+    </details>
+
+    <details>
+      <summary data-en="How do I register with the bot?" data-fr="Comment m'enregistrer auprès du robot?">How do I register with the bot?</summary>
+      <div class="answer" data-en="Auth with X and set /mode yournick +x first, then send /msg OhCanada register. The bot replies with a one-time code and you type it back — that is all. It stores a handle and your hostname, and grants no access flags; a channel op hands those out. The full walkthrough is in the bot guide."
+           data-fr="Authentifie-toi auprès de X et fais /mode tonpseudo +x d'abord, puis envoie /msg OhCanada register. Le robot répond avec un code à usage unique que tu retapes — c'est tout. Il retient un handle et ton nom d'hôte, sans aucun flag d'accès; c'est un op du canal qui les accorde. La marche à suivre complète est dans le guide du robot.">
+        Auth with X and set /mode yournick +x first, then send /msg OhCanada register. The bot replies with a one-time code and you type it back — that is all. It stores a handle and your hostname, and grants no access flags; a channel op hands those out. The full walkthrough is in the bot guide.</div>
     </details>
 
     <details>

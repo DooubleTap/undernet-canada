@@ -242,6 +242,9 @@ footer a{color:var(--muted)}
     <a href="#cmd-master">Master commands</a>
     <a href="#cmd-owner">Bot owner commands</a>
     <a href="#cmd-msg">Private message commands</a>
+    <h5>Users &amp; logging</h5>
+    <a href="#register">Self-registration</a>
+    <a href="#chanlog">Channel logging</a>
     <h5>Features</h5>
     <a href="#modules">Modules</a>
     <a href="#activevoice">ActiveVoice</a>
@@ -291,8 +294,8 @@ footer a{color:var(--muted)}
     <tr><th>Requirements</th><td>Eggdrop 1.8 or newer (tested on 1.10.1) · Tcl 8.5 or newer</td></tr>
     <tr><th>Network</th><td>Written for Undernet ircu — aware of the <code>X</code> and <code>W</code> services</td></tr>
     <tr><th>Trigger</th><td><code>!</code> by default — <code>cc(cmdchar)</code></td></tr>
-    <tr><th>Commands</th><td>44, documented in one shared help table</td></tr>
-    <tr><th>Modules</th><td><code>topic</code> · <code>activevoice</code> · <code>idledevoice</code> · <code>idledeop</code></td></tr>
+    <tr><th>Commands</th><td>46, documented in one shared help table</td></tr>
+    <tr><th>Modules</th><td><code>topic</code> · <code>activevoice</code> · <code>idledevoice</code> · <code>idledeop</code> · <code>chanlog</code></td></tr>
     <tr><th>License</th><td>GPLv3</td></tr>
   </table>
   <div class="tip"><b>The two commands to remember:</b> <code>!help</code> lists what's available and
@@ -344,6 +347,11 @@ source scripts/lmao.tcl</pre></div>
     <tr><td><code>cc(activevoice_exempt_flags)</code></td><td><code>n m v</code></td><td>Flags that make a user invisible to ActiveVoice</td></tr>
     <tr><td><code>cc(protected_bots)</code></td><td><code>X W</code></td><td>Nicks the bot will never deop or ban</td></tr>
     <tr><td><code>cc(protected_flags)</code></td><td><code>n m</code></td><td>Flags that protect a user from deop/devoice/ban</td></tr>
+    <tr><td><code>cc(register_enabled)</code></td><td><code>1</code></td><td>Master switch for self-registration</td></tr>
+    <tr><td><code>cc(register_token_life)</code></td><td><code>300</code></td><td>Seconds a registration code stays valid</td></tr>
+    <tr><td><code>cc(register_cooldown)</code></td><td><code>600</code></td><td>Seconds between registration attempts from one host</td></tr>
+    <tr><td><code>cc(register_handle_max)</code></td><td><code>9</code></td><td>Longest handle a registration may claim — must not exceed <code>handlen</code></td></tr>
+    <tr><td><code>cc(register_flags)</code></td><td><em>empty</em></td><td>Flags a self-registered user gets. Leave empty</td></tr>
     <tr><td><code>hopondeop</code> / <code>kickondeop</code></td><td><code>1</code></td><td>React when the bot itself is deopped</td></tr>
   </table>
   </div>
@@ -415,6 +423,17 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
   Level: Op (o)
   Flags: -o
   Hosts: *!*@his.host.com</pre></div>
+  </div>
+
+  <div class="cmd" data-k="register signup self register account handle host">
+    <div class="cmd-head"><h4><span class="amp">/msg</span> register</h4><span class="lvl all">Anyone</span><span class="lvl msg">/msg</span></div>
+    <p>Registers you with the bot using the host you are on. You get a one-time code to type back,
+    and the bot re-checks everything before it saves anything. Full walkthrough in
+    <a href="#register">self-registration</a>.</p>
+    <div class="code syntax"><span class="tag">syntax</span><button class="copy" title="Copy">⧉</button><pre><span class="t">/msg BotNick register</span> <span class="o">[handle]</span>
+<span class="t">/msg BotNick verify</span> <span class="a">&lt;code&gt;</span>       <span class="c"># the code it sends back</span></pre></div>
+    <div class="tip"><b>Hide your host first.</b> Auth with X and set <code>+x</code> before registering,
+    so the bot stores <code>&lt;account&gt;.users.undernet.org</code> instead of your ISP host.</div>
   </div>
 
   <div class="cmd" data-k="version script github repo">
@@ -606,6 +625,17 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
     <div class="code example"><span class="tag">example</span><button class="copy" title="Copy">⧉</button><pre><span class="t">!idledeop</span> #canada 2</pre></div>
   </div>
 
+  <div class="cmd" data-k="chanlog log logging audit ops channel trail">
+    <div class="cmd-head"><h4><span class="amp">!</span>chanlog</h4><span class="lvl master">Master+</span><span class="lvl msg">/msg</span></div>
+    <p>Shows or sets where this channel's audit trail goes — access changes, sanctions,
+    registrations, denied attempts and bot control. See <a href="#chanlog">channel logging</a>.</p>
+    <div class="code syntax"><span class="tag">syntax</span><button class="copy" title="Copy">⧉</button><pre><span class="t">!chanlog</span>                     <span class="c"># where does this channel log, and is it on</span>
+<span class="t">!chanlog</span> <span class="a">#ops</span>                <span class="c"># send the log there, and switch it on</span>
+<span class="t">!chanlog</span> off                 <span class="c"># stop logging this channel</span>
+<span class="t">!chanlog</span> on                  <span class="c"># start again, same destination</span>
+<span class="t">/msg BotNick chanlog</span> <span class="a">#chan #ops</span></pre></div>
+  </div>
+
   <div class="cmd" data-k="module modules list enable disable per channel">
     <div class="cmd-head"><h4><span class="amp">!</span>module &nbsp;/&nbsp; <span class="amp">!</span>modules</h4><span class="lvl master">Master+</span><span class="lvl msg">/msg</span></div>
     <p>Shows or changes which modules run <strong>on this channel</strong>. The list shows each
@@ -753,8 +783,8 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
 <!-- ================= MODULES ================= -->
 <section id="modules">
   <h2><span class="hash">#</span>Modules</h2>
-  <p class="sec-intro">Four features can be switched on and off <strong>per channel</strong>, live,
-  without editing the config. All four default to <span class="state-on">on</span>.</p>
+  <p class="sec-intro">Five features can be switched on and off <strong>per channel</strong>, live,
+  without editing the config. All five default to <span class="state-on">on</span>.</p>
   <div class="table-scroll">
   <table>
     <tr><th style="width:150px">Module</th><th style="width:90px">Default</th><th>What it does</th></tr>
@@ -762,6 +792,7 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
     <tr><td><code>activevoice</code></td><td><span class="state-on">ON</span></td><td>Auto-voices non-registered users when they talk, and tracks their activity</td></tr>
     <tr><td><code>idledevoice</code></td><td><span class="state-on">ON</span></td><td>Removes voice from non-registered users who have gone idle</td></tr>
     <tr><td><code>idledeop</code></td><td><span class="state-on">ON</span></td><td>Deops ops idle past the channel's limit</td></tr>
+    <tr><td><code>chanlog</code></td><td><span class="state-on">ON</span></td><td>Sends this channel's audit trail to the ops channel — see <a href="#chanlog">channel logging</a></td></tr>
   </table>
   </div>
   <div class="code example"><span class="tag">examples</span><button class="copy" title="Copy">⧉</button><pre><span class="t">!module</span> list                          <span class="c"># state of every module here</span>
@@ -873,13 +904,124 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
   </div>
 </section>
 
+<!-- ================= REGISTRATION ================= -->
+<section id="register">
+  <h2><span class="hash">#</span>Self-registration</h2>
+  <p class="sec-intro">People can add themselves to the userfile without an op doing it by hand.
+  It takes two steps on purpose, and the bot is pointed at the one thing that actually decides
+  whether host-based identification is safe: <strong>which host gets stored</strong>.</p>
+
+  <h3 class="sub">Step one</h3>
+  <div class="code syntax"><span class="tag">syntax</span><button class="copy" title="Copy">⧉</button><pre><span class="t">/msg BotNick register</span> <span class="o">[handle]</span>   <span class="c"># handle defaults to your nick</span></pre></div>
+  <p>The bot answers with the safety advice, what it would store, and a one-time code:</p>
+  <div class="code reply"><span class="tag">notice</span><button class="copy" title="Copy">⧉</button><pre><span class="n">Read this first:</span> your host is not hidden. It is safer to auth with X and hide it before registering:
+  1. /msg x@channels.undernet.org login &lt;account&gt; &lt;password&gt;   (only ever send that to x@channels.undernet.org)
+  2. /mode yournick +x     - your host becomes &lt;account&gt;.users.undernet.org
+  3. come back and register again
+Why: an ISP host like dsl-142-99-1-2.videotron.ca gets handed to someone else when your IP changes, and they would inherit your access here.
+---
+I would register <span class="t">newguy</span> with the hostmask <span class="t">*!*@dsl-142-99-1-2.videotron.ca</span> and no access flags.
+<span class="n">To register please type:</span> /msg BotNick verify <span class="t">pcf957lcnlbl</span>
+That code is good for 5 minutes. If you did not ask for this, ignore it - nothing has been saved.</pre></div>
+
+  <p>If the person is already <code>+x</code>, that warning is replaced by confirmation that their
+  host is hidden and belongs to their X account.</p>
+
+  <h3 class="sub">Step two</h3>
+  <div class="code syntax"><span class="tag">syntax</span><button class="copy" title="Copy">⧉</button><pre><span class="t">/msg BotNick verify</span> <span class="a">pcf957lcnlbl</span></pre></div>
+  <p>The code has to be read out of a notice and typed back, which is what stops a script from
+  registering nicks in bulk. <strong>Nothing is written until it comes back.</strong></p>
+
+  <h3 class="sub">What the bot checks — twice</h3>
+  <p class="sec-intro">Every check from step one runs again at step two, because nick, host and
+  userfile can all change in between.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th style="width:290px">Check</th><th>Why</th></tr>
+    <tr><td>Shares a channel with the bot</td><td>Only people it can actually see. The host comes from <code>getchanhost</code>, never from anything the user sends</td></tr>
+    <tr><td>Host does not already match a record</td><td><code>finduser</code> on the real <code>nick!ident@host</code></td></tr>
+    <tr><td>Host unchanged since the request</td><td>Blocks asking on one IP and confirming on another</td></tr>
+    <tr><td>Handle free, valid, one word</td><td>2–<code>register_handle_max</code> characters, no spaces or punctuation</td></tr>
+    <tr><td>Rate limit per host</td><td><code>register_cooldown</code>, charged only when a code is really issued</td></tr>
+    <tr><td>Code matches and has not expired</td><td><code>register_token_life</code></td></tr>
+    <tr><td><strong>No access flags granted</strong></td><td>Registration gets you a record, nothing else — ops grant flags with <code>!chattr</code></td></tr>
+  </table>
+  </div>
+
+  <div class="warn"><b>Why the X advice is not decoration.</b> Host-based identification cuts both
+  ways: anyone sharing a registered host <em>is</em> that user as far as the bot is concerned. A
+  <code>*.users.undernet.org</code> host can only be worn by someone authed to that X account, which
+  is why the bot pushes for it. When a second person on a shared host asks to register, the bot does
+  not guess — it says the host already matches record <em>X</em> and sends them to an op.</div>
+
+  <div class="note">Every request, refusal and success is logged and announced to the ops channel
+  through <a href="#chanlog">chanlog</a>. Registrations are never silent.</div>
+
+  <h3 class="sub">Turning it off</h3>
+  <div class="code example"><span class="tag">config</span><button class="copy" title="Copy">⧉</button><pre>set cc(register_enabled) 0</pre></div>
+</section>
+
+<!-- ================= CHANLOG ================= -->
+<section id="chanlog">
+  <h2><span class="hash">#</span>Channel logging</h2>
+  <p class="sec-intro">One audit trail for the channel staff: who got access, who got sanctioned,
+  who registered, who was refused. It goes to a channel of your choosing, per source channel, and
+  it is a module like any other.</p>
+
+  <div class="code syntax"><span class="tag">syntax</span><button class="copy" title="Copy">⧉</button><pre><span class="t">!chanlog</span>                     <span class="c"># where does this channel log, and is it on</span>
+<span class="t">!chanlog</span> <span class="a">#ops</span>                <span class="c"># send it there, and switch logging on</span>
+<span class="t">!chanlog</span> off                 <span class="c"># stop logging this channel</span>
+<span class="t">!chanlog</span> on                  <span class="c"># start again, same destination</span>
+<span class="t">/msg BotNick chanlog</span> <span class="a">#chan #ops</span></pre></div>
+
+  <p>It defaults to <span class="state-on">on</span>, pointed at <code>cc(backchan)</code>, so it
+  works as soon as the script loads. Each channel keeps its own destination.</p>
+
+  <h3 class="sub">What a log looks like</h3>
+  <div class="code reply"><span class="tag">ops channel</span><button class="copy" title="Copy">⧉</button><pre><span class="a">[ACCESS]</span>   #canada boss opped newguy
+<span class="a">[ACCESS]</span>   #canada boss set flags +o on someuser
+<span class="a">[ACCESS]</span>   #canada boss set the topic: Bienvenue au #Canada
+<span class="t">[SANCTION]</span> #canada boss kicked troll - flooding
+<span class="t">[SANCTION]</span> #canada boss banned troll (*!*@troll.host) - spam
+<span class="t">[SANCTION]</span> #canada auto: deopped someop after 187 minutes idle
+<span class="n">[REGISTER]</span> newguy registered as newguy (*!*@dsl-1-2-3.videotron.ca)
+<span class="o">[MODULE]</span>   #canada boss disabled module idledevoice
+<span class="o">[BOT]</span>      boss reloaded the scripts (rehash)
+<span class="t">[DENIED]</span>   troll (*) tried restart by /msg</pre></div>
+
+  <h3 class="sub">What gets logged</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th style="width:130px">Category</th><th>Events</th></tr>
+    <tr><td><code>ACCESS</code></td><td>op, voice, mode, chattr, adduser, deluser, topic, topicsync, say, act</td></tr>
+    <tr><td><code>SANCTION</code></td><td>kick, ban, unban, blacklist, whitelist, deop, devoice, and automatic idle-deops</td></tr>
+    <tr><td><code>REGISTER</code></td><td>every registration request, refusal and success</td></tr>
+    <tr><td><code>MODULE</code></td><td>module toggles, idle-deop settings, logging changes</td></tr>
+    <tr><td><code>BOT</code></td><td>rehash, restart, jump, save, join, part, botnick, global</td></tr>
+    <tr><td><code>DENIED</code></td><td>refused attempts at owner commands, module changes and op by <code>/msg</code></td></tr>
+  </table>
+  </div>
+
+  <div class="note"><b>Deliberately not logged:</b> automatic voice and devoice from ActiveVoice.
+  Those fire on every talker and would bury the events worth reading. Automatic idle-<em>deop</em>
+  is logged, because it is rare and consequential.</div>
+
+  <h3 class="sub">What it refuses to do</h3>
+  <table>
+    <tr><th style="width:290px">Logging a channel into itself</th><td>Refused — that is a feedback loop</td></tr>
+    <tr><th>Pointing at a channel the bot is not on</th><td>Refused, with a nudge to <code>!join</code> it first</td></tr>
+    <tr><th>Shouting at an empty destination</th><td>The line is dropped rather than bounced by the server</td></tr>
+    <tr><th>Changing what a command does</th><td>Logging always happens after the action succeeded, so a failed <code>!deop</code> logs nothing</td></tr>
+  </table>
+</section>
+
 <!-- ================= GOTCHAS ================= -->
 <section id="gotchas">
   <h2><span class="hash">#</span>Known limits</h2>
   <p class="sec-intro">Worth knowing before you go looking for a bug.</p>
   <div class="warn"><b>Module states reset on reload.</b> <code>!disable</code> is remembered in
   memory only — a <code>.rehash</code> or <code>.restart</code> returns every module to its default.</div>
-  <div class="warn"><b>Stored topics reset on reload</b> for the same reason.</div>
+  <div class="warn"><b>Stored topics reset on reload</b> for the same reason, and so do <b>chanlog destinations</b> — a channel pointed at <code>#ops</code> falls back to <code>cc(backchan)</code> after a restart.</div>
   <div class="warn"><b><code>!chanset</code> and <code>!uptime</code> are open to everyone</b> — both are
   bound <code>n|-</code>, which requires no channel flags. Harmless for <code>!uptime</code>; change
   the bind to <code>n|m</code> if <code>!chanset</code> should be restricted.</div>
@@ -898,6 +1040,8 @@ Bans and kicks a user (mask: *!*@host). Protects +n/+m flags and service bots
     <tr><th>ActiveVoice</th><td>Registered <code>+n</code> / <code>+m</code> / <code>+v</code> users are now exempt. Users with no activity record get their clock started instead of being devoiced.</td></tr>
     <tr><th>Timers</th><td>Fixed timers doubling on every tick, and leftover timers surviving a rehash.</td></tr>
     <tr><th>Owner commands</th><td><code>!restart</code> and <code>!jump</code> now notice you before acting. Added <code>/msg</code> forms for rehash, restart, jump and save.</td></tr>
+    <tr><th>Self-registration</th><td>New: <code>/msg &lt;bot&gt; register</code> with a typed-back confirmation code, host re-checks at both steps, per-host rate limiting, and the X / <code>+x</code> advice given every time. See <a href="#register">self-registration</a>.</td></tr>
+    <tr><th>Channel logging</th><td>New <code>chanlog</code> module and <code>!chanlog</code> command: access, sanctions, registrations, denied attempts and bot control all go to an ops channel of your choosing. See <a href="#chanlog">channel logging</a>.</td></tr>
     <tr><th>Naming</th><td><code>idle_devoice</code> renamed <code>idledevoice</code> to match the other module names.</td></tr>
   </table>
 </section>
