@@ -151,6 +151,66 @@ section>.wrap>header{margin-bottom:34px}
 .card h3{margin-bottom:8px}
 .card p{color:var(--muted);font-size:14px}
 
+/* ---------- console walkthrough ---------- */
+.console{
+  background:var(--code-bg);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.4);
+}
+.console .bar{
+  display:flex;align-items:center;gap:7px;padding:9px 14px;
+  background:var(--panel2);border-bottom:1px solid var(--border);
+}
+.console .bar i{width:10px;height:10px;border-radius:50%;display:block;background:#3a4453}
+.console .bar i:nth-child(1){background:var(--accent)}
+.console .bar i:nth-child(2){background:var(--gold)}
+.console .bar i:nth-child(3){background:var(--green)}
+.console .bar span{margin-left:8px;color:var(--faint);font-size:11.5px;letter-spacing:.3px;font-family:var(--mono)}
+.crow{
+  display:grid;grid-template-columns:44px 1fr auto;align-items:start;gap:14px;
+  padding:16px 16px 16px 0;border-bottom:1px solid var(--border);
+}
+.crow:last-child{border-bottom:0}
+.crow:hover{background:rgba(255,255,255,.017)}
+.crow .cnum{
+  font:700 12px var(--mono);color:var(--faint);text-align:right;padding-top:2px;
+  border-right:1px solid var(--border);padding-right:12px;align-self:stretch;
+}
+.crow .cmdline{font-family:var(--mono);font-size:14px;color:#c9d1d9;line-height:1.5}
+.crow .cmdline .cmd{color:var(--accent-soft);font-weight:600}
+.crow .cmdline .arg{color:var(--blue)}
+.crow .cnote{display:block;margin-top:6px;font-family:var(--sans);font-size:13.5px;color:var(--muted);max-width:62ch}
+.crow .cnote a{color:var(--blue)}
+.crow .copybtn{margin-top:1px;opacity:.55;transition:opacity .15s}
+.crow:hover .copybtn{opacity:1}
+
+/* ---------- client list ---------- */
+.clist{border-top:1px solid var(--border)}
+.cgroup{
+  font:700 10.5px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:var(--faint);
+  padding:26px 0 10px;
+}
+.crow2{
+  display:grid;grid-template-columns:186px 1fr auto;align-items:baseline;gap:22px;
+  padding:15px 12px 15px 0;border-bottom:1px solid var(--border);
+  transition:background .12s;
+}
+.crow2:hover{background:rgba(255,255,255,.02)}
+.crow2 .cname{font:600 15.5px var(--mono);color:var(--text);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.crow2 .cname em{
+  font:700 9.5px var(--sans);font-style:normal;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--green);border:1px solid rgba(78,201,138,.4);background:rgba(78,201,138,.07);
+  border-radius:99px;padding:2px 7px;white-space:nowrap;
+}
+.crow2 .cdesc{color:var(--muted);font-size:14px;max-width:70ch}
+.crow2 .cget{font-size:13.5px;font-weight:600;color:var(--accent-soft);white-space:nowrap}
+.crow2 .cget:hover{text-decoration:none;color:var(--text)}
+@media(max-width:680px){
+  .crow{grid-template-columns:34px 1fr;gap:10px}
+  .crow .copybtn{display:none}
+  .crow2{grid-template-columns:1fr;gap:6px}
+  .crow2 .cget{margin-top:4px}
+}
+
 /* steps */
 .step{position:relative;padding-left:52px}
 .step .num{
@@ -366,45 +426,50 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       </p>
     </header>
 
-    <div class="grid g3">
-      <div class="card step">
-        <div class="num">1</div>
-        <h3 data-en="Pick a client" data-fr="Choisis un client">Pick a client</h3>
-        <p data-en="Any IRC client works. In a hurry? Skip this and use the webchat below — nothing to install."
-           data-fr="N'importe quel client IRC fonctionne. Pressé? Saute cette étape et utilise le webchat plus bas — rien à installer.">
-          Any IRC client works. In a hurry? Skip this and use the webchat below — nothing to install.</p>
+    <div class="console">
+      <div class="bar"><i></i><i></i><i></i><span data-en="your IRC client" data-fr="ton client IRC">your IRC client</span></div>
+
+      <div class="crow">
+        <div class="cnum">01</div>
+        <div>
+          <div class="cmdline"><span class="cmd">/server</span> <span class="arg">irc.undernet.org 6667</span></div>
+          <span class="cnote"
+            data-en="Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? &lt;code&gt;ix1.undernet.org&lt;/code&gt; and &lt;code&gt;ix2.undernet.org&lt;/code&gt; are AnyCast — they route you to the closest one automatically. The full list is &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on undernet.org&lt;/a&gt;."
+            data-fr="Undernet compte une quarantaine de serveurs. Cette adresse t'en attribue un. Tu veux le plus proche? &lt;code&gt;ix1.undernet.org&lt;/code&gt; et &lt;code&gt;ix2.undernet.org&lt;/code&gt; sont en AnyCast — ils t'acheminent automatiquement vers le plus proche. La liste complète est &lt;a href=&quot;https://www.undernet.org/servers.php&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;sur undernet.org&lt;/a&gt;.">
+            Undernet runs about forty servers. This address sends you to one of them. Prefer the nearest? <code>ix1.undernet.org</code> and <code>ix2.undernet.org</code> are AnyCast — they route you to the closest one automatically. The full list is <a href="https://www.undernet.org/servers.php" target="_blank" rel="noopener">on undernet.org</a>.</span>
+        </div>
+        <button class="copybtn" data-copy="/server irc.undernet.org 6667">COPY</button>
       </div>
-      <div class="card step">
-        <div class="num">2</div>
-        <h3 data-en="Connect to Undernet" data-fr="Connecte-toi à Undernet">Connect to Undernet</h3>
-        <p data-en="Point it at the Undernet round-robin. Canadians can use the regional alias instead."
-           data-fr="Pointe-le vers l'adresse rotative d'Undernet. Les Canadiens peuvent utiliser l'alias régional.">
-          Point it at the Undernet round-robin. Canadians can use the regional alias instead.</p>
-        <div class="copyline">
-          <code><span class="cmd">/server</span> irc.undernet.org 6667</code>
-          <button class="copybtn" data-copy="/server irc.undernet.org 6667">COPY</button>
+
+      <div class="crow">
+        <div class="cnum">02</div>
+        <div>
+          <div class="cmdline"><span class="cmd">/nick</span> <span class="arg">your_nick</span></div>
+          <span class="cnote"
+            data-en="Nothing to sign up for. Undernet has no NickServ, so take any nickname nobody else is using."
+            data-fr="Rien à créer. Undernet n'a pas de NickServ : prends n'importe quel pseudo que personne d'autre n'utilise.">
+            Nothing to sign up for. Undernet has no NickServ, so take any nickname nobody else is using.</span>
         </div>
-        <div class="copyline">
-          <code><span class="cmd">/server</span> ca.undernet.org 6667</code>
-          <button class="copybtn" data-copy="/server ca.undernet.org 6667">COPY</button>
-        </div>
+        <button class="copybtn" data-copy="/nick your_nick">COPY</button>
       </div>
-      <div class="card step">
-        <div class="num">3</div>
-        <h3 data-en="Join the channel" data-fr="Entre dans le canal">Join the channel</h3>
-        <p data-en="Pick any nickname that isn't taken, then join. Say hello — someone will answer."
-           data-fr="Choisis un pseudo qui n'est pas pris, puis entre. Dis bonjour — quelqu'un va répondre.">
-          Pick any nickname that isn't taken, then join. Say hello — someone will answer.</p>
-        <div class="copyline">
-          <code><span class="cmd">/join</span> #Canada</code>
-          <button class="copybtn" data-copy="/join #Canada">COPY</button>
+
+      <div class="crow">
+        <div class="cnum">03</div>
+        <div>
+          <div class="cmdline"><span class="cmd">/join</span> <span class="arg">#Canada</span></div>
+          <span class="cnote"
+            data-en="That's it — you're in. Say hello; someone will answer. If the room looks quiet, stay anyway: people idle here for years."
+            data-fr="C'est tout — tu es entré. Dis bonjour, quelqu'un va répondre. Si ça a l'air tranquille, reste quand même : le monde traîne ici pendant des années.">
+            That's it — you're in. Say hello; someone will answer. If the room looks quiet, stay anyway: people idle here for years.</span>
         </div>
-        <div class="copyline">
-          <code><span class="cmd">/nick</span> your_nick</code>
-          <button class="copybtn" data-copy="/nick your_nick">COPY</button>
-        </div>
+        <button class="copybtn" data-copy="/join #Canada">COPY</button>
       </div>
     </div>
+
+    <p style="margin-top:18px;font-size:14px;color:var(--faint)"
+       data-en="No client yet? The webchat below needs none of this."
+       data-fr="Pas encore de client? Le webchat plus bas n'a besoin de rien de tout ça.">
+      No client yet? The webchat below needs none of this.</p>
 
     <div class="note warn">
       <b data-en="About encryption:" data-fr="À propos du chiffrement :">About encryption:</b>
@@ -456,75 +521,70 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       <div class="kicker" data-en="Software" data-fr="Logiciels">Software</div>
       <h2 data-en="Pick a client" data-fr="Choisis un client">Pick a client</h2>
       <p class="lede"
-         data-en="All of these speak plain IRC and all of them reach Undernet. Filter by what you're running."
-         data-fr="Tous parlent le IRC standard et tous rejoignent Undernet. Filtre selon ton système.">
-        All of these speak plain IRC and all of them reach Undernet. Filter by what you're running.
+         data-en="All of these speak plain IRC and all of them reach Undernet. Any one of them will do."
+         data-fr="Tous parlent le IRC standard et tous rejoignent Undernet. N'importe lequel fera l'affaire.">
+        All of these speak plain IRC and all of them reach Undernet. Any one of them will do.
       </p>
     </header>
 
-    <div class="chips" id="chips">
-      <button class="chip on" data-plat="all" data-en="Everything" data-fr="Tout">Everything</button>
-      <button class="chip" data-plat="win">Windows</button>
-      <button class="chip" data-plat="mac">macOS</button>
-      <button class="chip" data-plat="nix">Linux</button>
-      <button class="chip" data-plat="web" data-en="Web &amp; mobile" data-fr="Web et mobile">Web &amp; mobile</button>
-    </div>
+    <div class="clist">
+      <div class="cgroup">Windows</div>
 
-    <div class="grid g3" id="clientgrid">
-      <div class="card client" data-plat="win">
-        <div class="top-row"><h3>mIRC</h3><span class="plat">Windows</span></div>
-        <p data-en="The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware."
-           data-fr="Le classique. Trente ans de scripts derrière lui et encore le choix par défaut de bien des habitués d'Undernet. Partagiciel.">
-          The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware.</p>
-        <a class="get" href="https://www.mirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
-        <div class="tagrow"><span class="tag rec" data-en="Popular here" data-fr="Populaire ici">Popular here</span></div>
+      <div class="crow2">
+        <div class="cname">mIRC <em data-en="Popular here" data-fr="Populaire ici">Popular here</em></div>
+        <div class="cdesc" data-en="The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware."
+             data-fr="Le classique. Trente ans de scripts derrière lui et encore le choix par défaut de bien des habitués d'Undernet. Partagiciel.">
+          The classic. Thirty years of scripts behind it and still the default for a lot of Undernet regulars. Shareware.</div>
+        <a class="cget" href="https://www.mirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
-      <div class="card client" data-plat="win">
-        <div class="top-row"><h3>AdiIRC</h3><span class="plat">Windows</span></div>
-        <p data-en="Free, looks and scripts almost exactly like mIRC, and it's actively maintained. The easy upgrade if you already know mIRC."
-           data-fr="Gratuit, ressemble à mIRC et utilise presque les mêmes scripts, mais activement maintenu. La mise à niveau évidente si tu connais déjà mIRC.">
-          Free, looks and scripts almost exactly like mIRC, and it's actively maintained. The easy upgrade if you already know mIRC.</p>
-        <a class="get" href="https://adiirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
-        <div class="tagrow"><span class="tag" data-en="Free" data-fr="Gratuit">Free</span></div>
+      <div class="crow2">
+        <div class="cname">AdiIRC</div>
+        <div class="cdesc" data-en="Free, looks and scripts almost exactly like mIRC, and it is actively maintained. The easy upgrade if you already know mIRC."
+             data-fr="Gratuit, ressemble à mIRC et utilise presque les mêmes scripts, mais activement maintenu. La mise à niveau évidente si tu connais déjà mIRC.">
+          Free, looks and scripts almost exactly like mIRC, and it is actively maintained. The easy upgrade if you already know mIRC.</div>
+        <a class="cget" href="https://adiirc.com/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
-      <div class="card client" data-plat="win mac nix">
-        <div class="top-row"><h3>HexChat</h3><span class="plat">Win · Linux</span></div>
-        <p data-en="Open source, no-nonsense, works the same everywhere. A good first client if you've never used IRC before."
-           data-fr="Libre, sans chichi, identique partout. Un bon premier client si tu n'as jamais utilisé IRC.">
-          Open source, no-nonsense, works the same everywhere. A good first client if you've never used IRC before.</p>
-        <a class="get" href="https://hexchat.github.io/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
-        <div class="tagrow"><span class="tag rec" data-en="Good first client" data-fr="Bon premier client">Good first client</span></div>
+      <div class="cgroup" data-en="Windows · macOS · Linux" data-fr="Windows · macOS · Linux">Windows · macOS · Linux</div>
+
+      <div class="crow2">
+        <div class="cname">HexChat <em data-en="Start here" data-fr="Commence ici">Start here</em></div>
+        <div class="cdesc" data-en="Open source, no-nonsense, works the same everywhere. The one to pick if you have never used IRC before."
+             data-fr="Libre, sans chichi, identique partout. Celui à choisir si tu n'as jamais utilisé IRC.">
+          Open source, no-nonsense, works the same everywhere. The one to pick if you have never used IRC before.</div>
+        <a class="cget" href="https://hexchat.github.io/" target="_blank" rel="noopener" data-en="Download ↗" data-fr="Télécharger ↗">Download ↗</a>
       </div>
 
-      <div class="card client" data-plat="nix mac">
-        <div class="top-row"><h3>irssi</h3><span class="plat">Terminal</span></div>
-        <p data-en="Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect."
-           data-fr="Tourne dans un terminal, tourne sans fin, tourne sur le serveur où tu te connectes en SSH. Avec tmux, tu ne te déconnectes jamais.">
-          Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect.</p>
-        <a class="get" href="https://irssi.org/" target="_blank" rel="noopener" data-en="Get irssi ↗" data-fr="Obtenir irssi ↗">Get irssi ↗</a>
-        <div class="tagrow"><span class="tag" data-en="Keyboard only" data-fr="Clavier seulement">Keyboard only</span></div>
+      <div class="cgroup" data-en="Terminal" data-fr="Terminal">Terminal</div>
+
+      <div class="crow2">
+        <div class="cname">irssi</div>
+        <div class="cdesc" data-en="Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect."
+             data-fr="Tourne dans un terminal, tourne sans fin, tourne sur le serveur où tu te connectes en SSH. Avec tmux, tu ne te déconnectes jamais.">
+          Runs in a terminal, runs forever, runs on the server you SSH into. Pair it with tmux and you never disconnect.</div>
+        <a class="cget" href="https://irssi.org/" target="_blank" rel="noopener" data-en="Get irssi ↗" data-fr="Obtenir irssi ↗">Get irssi ↗</a>
       </div>
 
-      <div class="card client" data-plat="nix mac">
-        <div class="top-row"><h3>WeeChat</h3><span class="plat">Terminal</span></div>
-        <p data-en="The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone."
-           data-fr="L'autre grand client en terminal : rapide, scriptable, avec une vraie interface à distance si tu veux ta session sur ton téléphone.">
-          The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone.</p>
-        <a class="get" href="https://weechat.org/" target="_blank" rel="noopener" data-en="Get WeeChat ↗" data-fr="Obtenir WeeChat ↗">Get WeeChat ↗</a>
-        <div class="tagrow"><span class="tag" data-en="Scriptable" data-fr="Scriptable">Scriptable</span></div>
+      <div class="crow2">
+        <div class="cname">WeeChat</div>
+        <div class="cdesc" data-en="The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone."
+             data-fr="L'autre grand client en terminal : rapide, scriptable, avec une vraie interface à distance si tu veux ta session sur ton téléphone.">
+          The other great terminal client: fast, scriptable, and it has a proper remote interface if you want your session on your phone.</div>
+        <a class="cget" href="https://weechat.org/" target="_blank" rel="noopener" data-en="Get WeeChat ↗" data-fr="Obtenir WeeChat ↗">Get WeeChat ↗</a>
       </div>
 
-      <div class="card client" data-plat="web">
-        <div class="top-row"><h3>IRCCloud</h3><span class="plat" data-en="Web · iOS · Android" data-fr="Web · iOS · Android">Web · iOS · Android</span></div>
-        <p data-en="Hosted IRC that stays connected while you're away and syncs to your phone. Free tier disconnects after a couple of hours idle."
-           data-fr="IRC hébergé qui reste connecté en ton absence et se synchronise avec ton téléphone. La version gratuite se déconnecte après quelques heures d'inactivité.">
-          Hosted IRC that stays connected while you're away and syncs to your phone. Free tier disconnects after a couple of hours idle.</p>
-        <a class="get" href="https://www.irccloud.com/" target="_blank" rel="noopener" data-en="Open IRCCloud ↗" data-fr="Ouvrir IRCCloud ↗">Open IRCCloud ↗</a>
-        <div class="tagrow"><span class="tag rec" data-en="Stays online" data-fr="Reste en ligne">Stays online</span></div>
+      <div class="cgroup" data-en="Web &amp; mobile" data-fr="Web et mobile">Web &amp; mobile</div>
+
+      <div class="crow2">
+        <div class="cname">IRCCloud <em data-en="Stays online" data-fr="Reste en ligne">Stays online</em></div>
+        <div class="cdesc" data-en="Hosted IRC that stays connected while you are away and syncs to your phone. The free tier disconnects after a couple of hours idle."
+             data-fr="IRC hébergé qui reste connecté en ton absence et se synchronise avec ton téléphone. La version gratuite se déconnecte après quelques heures d'inactivité.">
+          Hosted IRC that stays connected while you are away and syncs to your phone. The free tier disconnects after a couple of hours idle.</div>
+        <a class="cget" href="https://www.irccloud.com/" target="_blank" rel="noopener" data-en="Open IRCCloud ↗" data-fr="Ouvrir IRCCloud ↗">Open IRCCloud ↗</a>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -763,18 +823,6 @@ document.addEventListener('click', function(e){
     setTimeout(function(){ b.classList.remove('ok'); b.textContent = old; }, 1300);
   };
   if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done).catch(function(){}); }
-});
-
-/* ---------- client filter ---------- */
-document.getElementById('chips').addEventListener('click', function(e){
-  var chip = e.target.closest('.chip');
-  if(!chip) return;
-  document.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === chip); });
-  var want = chip.getAttribute('data-plat');
-  document.querySelectorAll('.client').forEach(function(card){
-    var plats = card.getAttribute('data-plat').split(' ');
-    card.classList.toggle('hide', want !== 'all' && plats.indexOf(want) === -1);
-  });
 });
 
 /* ---------- webchat (loads only on click) ---------- */

@@ -28,7 +28,7 @@ browser and what you see is what ships.
   `#Canada` — but only loads after the visitor clicks, so nobody is silently connected to
   IRC by opening the homepage.
 - **Copy-paste connection commands** for `/server`, `/nick` and `/join`.
-- **Filterable client list** — Windows, macOS, Linux, web & mobile.
+- **Client list grouped by platform** — Windows, cross-platform, terminal, web & mobile.
 - **Bot documentation** linked throughout and shipped in the same repo.
 - Responsive down to phone width, and honours `prefers-reduced-motion`.
 
@@ -64,7 +64,7 @@ Push to the branch and the site updates.
 ## Channel
 
 ```
-Server    irc.undernet.org   (ca.undernet.org for the Canadian round-robin)
+Server    irc.undernet.org   (ix1/ix2.undernet.org are AnyCast - nearest server)
 Ports     6660-6669, 7000    (Undernet does not offer TLS)
 Channel   #Canada
 Bot       OhCanada
@@ -109,7 +109,7 @@ aucune dépendance.
   `#Canada` — mais il ne se charge qu'après un clic, pour que personne ne soit connecté à
   IRC sans le vouloir.
 - **Commandes de connexion copiables** : `/server`, `/nick`, `/join`.
-- **Liste de clients filtrable** — Windows, macOS, Linux, web et mobile.
+- **Liste de clients groupée par plateforme** — Windows, multiplateforme, terminal, web et mobile.
 - **Documentation du robot** liée partout et hébergée dans le même dépôt.
 - Adaptatif jusqu'à la largeur d'un téléphone, et respecte `prefers-reduced-motion`.
 
@@ -130,7 +130,7 @@ python -m http.server 8000     # puis ouvrir http://localhost:8000
 ## Le canal
 
 ```
-Serveur   irc.undernet.org   (ca.undernet.org pour l'adresse canadienne)
+Serveur   irc.undernet.org   (ix1/ix2.undernet.org en AnyCast - serveur le plus proche)
 Ports     6660-6669, 7000    (Undernet n'offre pas de TLS)
 Canal     #Canada
 Robot     OhCanada
