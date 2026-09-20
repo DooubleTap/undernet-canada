@@ -141,9 +141,17 @@ nav.links a.x-reg:hover{background:var(--accent-fill-hover)}
 .ircwin .n1{color:var(--cyan)}
 .ircwin .n2{color:var(--purple)}
 .ircwin .n3{color:var(--green)}
+.ircwin .n4{color:var(--gold)}
 .ircwin .bot{color:var(--accent-soft);font-weight:600}
 .ircwin .notice{color:var(--gold)}
 .ircwin .you{color:var(--blue)}
+.ircwin .act{color:var(--purple)}
+.ircwin .hm{color:#6b7787}
+.ircwin .pfx{color:var(--faint)}
+.ircwin .inp{
+  display:flex;align-items:center;gap:7px;padding:9px 15px;
+  background:var(--panel2);border-top:1px solid var(--border);font-size:12.5px;
+}
 .ircwin .caret{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1.1s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
 
@@ -387,6 +395,7 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       <a href="#rules" data-en="Rules" data-fr="Règles">Rules</a>
       <a href="#faq" data-en="FAQ" data-fr="FAQ">FAQ</a>
       <span class="sep" aria-hidden="true"></span>
+      <a class="ext" href="https://irc.undernet.xyz/stats/undernet/canada.html" target="_blank" rel="noopener noreferrer" data-en="Channel stats ↗" data-fr="Statistiques ↗">Channel stats ↗</a>
       <a class="ext" href="https://www.undernet.org/" target="_blank" rel="noopener noreferrer">Undernet ↗</a>
       <a class="x-reg" href="https://cservice.undernet.org/live/" target="_blank" rel="noopener noreferrer" data-en="Register on X ↗" data-fr="S'inscrire sur X ↗">Register on X ↗</a>
     </nav>
@@ -425,17 +434,24 @@ footer.site{padding:52px 0 60px;color:var(--faint);font-size:13.5px}
       <div class="bar"><i></i><i></i><i></i><span>#Canada — irc.undernet.org</span></div>
       <div class="body">
         <div><span class="sys">*** Now talking in #Canada</span></div>
-        <div><span class="sys">*** Topic: Bienvenue au #Canada | EN &amp; FR | be decent</span></div>
+        <div><span class="sys">*** Topic is 'Bienvenue au #Canada | EN &amp; FR | be decent'</span></div>
+        <div><span class="sys">*** Set by halifax_liz on Sat Feb 07 19:41:08</span></div>
+        <div><span class="sys">*** Users: guest_42 @OhCanada @halifax_liz +dave_yyc marie_qc pei_steve</span></div>
+        <div><span class="sys">*** Channel modes: +tn</span></div>
         <div><span class="ts">21:04</span> <span class="n1">&lt;marie_qc&gt;</span> salut la gang, y fait -22 icitte</div>
-        <div><span class="ts">21:04</span> <span class="n2">&lt;dave_yyc&gt;</span> -22 and you're complaining? try january</div>
+        <div><span class="ts">21:04</span> <span class="n2">&lt;<span class="pfx">+</span>dave_yyc&gt;</span> -22 and you're complaining? try january</div>
         <div><span class="ts">21:05</span> <span class="n3">&lt;pei_steve&gt;</span> it's +9 on the island lol</div>
-        <div><span class="ts">21:05</span> <span class="sys">*** guest_42 has joined #Canada</span></div>
-        <div><span class="ts">21:05</span> <span class="bot">&lt;OhCanada&gt;</span> Welcome to #Canada, guest_42 — type !help</div>
+        <div><span class="ts">21:05</span> <span class="act">* marie_qc regarde par la fenêtre et soupire</span></div>
+        <div><span class="ts">21:05</span> <span class="sys">*** guest_42 (~guest@<span class="hm">Undernet-7b2e91.on.rogers.ca</span>) has joined #Canada</span></div>
+        <div><span class="ts">21:05</span> <span class="bot">&lt;<span class="pfx">@</span>OhCanada&gt;</span> Welcome to #Canada, guest_42 — type !help</div>
         <div><span class="ts">21:06</span> <span class="you">&lt;guest_42&gt;</span> !help</div>
-        <div><span class="notice">-OhCanada- Quick Help: Type !help &lt;command&gt; for details</span></div>
-        <div><span class="ts">21:06</span> <span class="sys">*** OhCanada sets mode +v guest_42</span></div>
-        <div><span class="ts">21:07</span> <span class="you">&lt;guest_42&gt;</span> <span class="caret"></span></div>
+        <div><span class="notice">-OhCanada- Quick Help: type !help &lt;command&gt; for details</span></div>
+        <div><span class="ts">21:06</span> <span class="sys">*** halifax_liz sets mode: +v guest_42</span></div>
+        <div><span class="ts">21:06</span> <span class="n4">&lt;<span class="pfx">@</span>halifax_liz&gt;</span> welcome aboard :)</div>
+        <div><span class="ts">21:07</span> <span class="sys">*** pei_steve has quit IRC (Ping timeout: 246 seconds)</span></div>
+        <div><span class="ts">21:07</span> <span class="you">&lt;<span class="pfx">+</span>guest_42&gt;</span> thanks! first time here</div>
       </div>
+      <div class="inp"><span class="you">[<span class="pfx">+</span>guest_42]</span> <span class="caret"></span></div>
     </div>
   </div>
 </div>
